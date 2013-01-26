@@ -55,7 +55,15 @@ bool GlowingArcher::SearchPath::AddPath(GlowingArcher::Text *path) {
     return false;
 }
 
-GlowingArcher::Text *GlowingArcher::SearchPath::FindFile(GlowingArcher::Text *fileName) {
+void GlowingArcher::SearchPath::Dump(void) const {
+    for (int idx = 0; idx < 128; idx++) {
+        if (paths[idx]) {
+            printf("%5d:\t%-18s == '%s'\n", idx, "searchPath", paths[idx]->CString());
+        }
+    }
+}
+
+GlowingArcher::Text *GlowingArcher::SearchPath::FindFile(GlowingArcher::Text *fileName) const {
     Text *fullPath = 0;
 
     for (int idx = 127; idx >= 0; idx++) {

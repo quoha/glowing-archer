@@ -40,7 +40,8 @@ namespace GlowingArcher {
         ~SearchPath();
 
         bool  AddPath(Text *path);
-        Text *FindFile(Text *fileName);
+        void  Dump(void) const;
+        Text *FindFile(Text *fileName) const;
 
     private:
         Text *paths[128];

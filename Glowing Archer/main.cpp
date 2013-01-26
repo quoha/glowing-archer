@@ -27,8 +27,39 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
+#include "Text.h"
+#include "SearchPath.h"
+#include <stdio.h>
+#include <cstring>
+
 int main(int argc, const char * argv[])
 try {
+    GlowingArcher::SearchPath *searchPath = new GlowingArcher::SearchPath;
+    
+    for (int idx = 1; idx < argc; idx++) {
+        char *opt = new char[std::strlen(argv[idx]) + 1];
+        std::strcpy(opt, argv[idx]);
+        char *val = opt;
+        while (*val && *val != '=') {
+            val++;
+        }
+        if (*val == '=') {
+            *(val++) = 0;
+        }
+
+        if (std::strcmp(opt, "model-file") == 0 && *val) {
+            GlowingArcher::Text *modelFile = new GlowingArcher::Text(val, -1);
+            printf(" info:\tloaded model '%s'\n", val);
+        } else if (std::strcmp(opt, "search-path") == 0 && *val) {
+            searchPath->AddPath(new GlowingArcher::Text(val, -1));
+        } else {
+            printf("\nerror:\tinvalid option '%s%s%s'\n", opt, *val ? "=" : "", val);
+            return 2;
+        }
+    }
+
+    searchPath->Dump();
+    
     return 0;
 } catch (...) {
     return 0;
