@@ -42,15 +42,27 @@ namespace GlowingArcher {
         ~InputStream();
 
         bool  Close(void);
+        bool  Open(Text *fileName);
+
         Text *ErrorMessage(void) const { return errmsg; }
         bool  IsValid(void) const { return errmsg ? false : true; }
-        bool  Open(Text *fileName);
-        bool  Redirect(Text *fileName);
+
+        bool  EndOfStream(void) const;
+        bool  NextChar(void);
+        char  PeekChar(void);
+        bool  SkipLine(void);
+        bool  SkipQuotedString(void);
+        bool  SkipWhiteSpace(void);
+
+        // Object inheritance
+        bool Dump(void) const;
 
     private:
         Text *sourceName;
-        Text *data;
         Text *errmsg;
+        char *data;
+        char *curr;
+        int   line;
     }; // class InputStream
 
     class OutputStream : protected Object {
@@ -59,18 +71,24 @@ namespace GlowingArcher {
         ~OutputStream();
         
         bool  Close(void);
-        Text *ErrorMessage(void) const { return errmsg; }
-        bool  Flush(void);
-        bool  IsValid(void) const { return errmsg ? false : true; }
         bool  Open(Text *fileName);
         bool  Redirect(Text *fileName);
+
+        Text *ErrorMessage(void) const { return errmsg; }
+        bool  IsValid(void) const { return errmsg ? false : true; }
+
         bool  Write(const char *fmt, ...);
         bool  Write(Text *text);
 
+        bool  Flush(void);
+
+        // Object inheritance
+        bool Dump(void) const;
+
     private:
         Text *targetName;
-        Text *data;
         Text *errmsg;
+        Text *data;
     }; // class OutputStream
 
 } // namespace GlowingArcher
