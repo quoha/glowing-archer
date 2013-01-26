@@ -4,6 +4,8 @@
 //
 //  Created by Michael Henderson on 1/25/13.
 //
+// This file is part of Glowing Archer (http://github.com/quoha/glowing-archer).
+//
 // Copyright (c) 2013 Michael D Henderson
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
