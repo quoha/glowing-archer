@@ -30,18 +30,21 @@
 #ifndef __Glowing_Archer__SearchPath__
 #define __Glowing_Archer__SearchPath__
 
+#include "Object.h"
 #include "Text.h"
 
 namespace GlowingArcher {
     
-    class SearchPath {
+    class SearchPath : protected Object {
     public:
         SearchPath(void);
         ~SearchPath();
 
         bool  AddPath(Text *path);
-        void  Dump(void) const;
         Text *FindFile(Text *fileName) const;
+
+        // Object overrides
+        bool Dump(void) const;
 
     private:
         Text *paths[128];

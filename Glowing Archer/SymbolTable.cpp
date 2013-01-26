@@ -1,10 +1,8 @@
 //
-//  Object.h
+//  SymbolTable.cpp
 //  Glowing Archer
 //
 //  Created by Michael Henderson on 1/26/13.
-//
-// This file is part of Glowing Archer (http://github.com/quoha/glowing-archer).
 //
 // Copyright (c) 2013 Michael D Henderson
 //
@@ -27,24 +25,14 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef __Glowing_Archer__Object__
-#define __Glowing_Archer__Object__
+#include "SymbolTable.h"
+#include <stdio.h>
 
-namespace GlowingArcher {
-    
-    class Object {
-    public:
-        Object(const char *className);
-        ~Object();
+GlowingArcher::SymbolTable::SymbolTable(void) : GlowingArcher::Object("GlowingArcher::SymbolTable") {
+    ;
+}
 
-        virtual bool Dump(void) const;
-        virtual bool Render(void) const;
-
-    private:
-        void       *id;
-        const char *className;
-    }; // class Object
-    
-} // namespace GlowingArcher
-
-#endif /* defined(__Glowing_Archer__Object__) */
+bool GlowingArcher::SymbolTable::Dump(void) const {
+    printf("symtb:\t%s\n", "*** dump ***");
+    return true;
+}

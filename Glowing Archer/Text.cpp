@@ -101,6 +101,11 @@ bool GlowingArcher::Text::Append(Text *text_) {
     return true;
 }
 
+bool GlowingArcher::Text::Dump(void) const {
+    printf(" text:\t%s\n", text);
+    return true;
+}
+
 bool GlowingArcher::Text::Equal(Text *text_) const {
     if (text_ && length == text_->length && std::strcmp(text, text_->text) == 0) {
         return true;

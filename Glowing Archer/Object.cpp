@@ -38,6 +38,11 @@ GlowingArcher::Object::Object(const char *className_) {
 GlowingArcher::Object::~Object() {
 }
 
+bool GlowingArcher::Object::Dump(void) const {
+    printf("..obj:\t%s %p\n", className, id);
+    return true;
+}
+
 bool GlowingArcher::Object::Render(void) const {
     printf("..obj:\t%s %p\n", className, id);
     return true;

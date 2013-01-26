@@ -29,13 +29,15 @@
 
 #include "Text.h"
 #include "SearchPath.h"
+#include "SymbolTable.h"
 #include <stdio.h>
 #include <cstring>
 
 int main(int argc, const char * argv[])
 try {
     bool isVerbose = false;
-    GlowingArcher::SearchPath *searchPath = new GlowingArcher::SearchPath;
+    GlowingArcher::SearchPath  *searchPath = new GlowingArcher::SearchPath;
+    GlowingArcher::SymbolTable *symtab     = new GlowingArcher::SymbolTable;
     
     for (int idx = 1; idx < argc; idx++) {
         char *opt = new char[std::strlen(argv[idx]) + 1];
@@ -73,6 +75,7 @@ try {
         }
     }
 
+    symtab->Dump();
     searchPath->Dump();
     
     return 0;

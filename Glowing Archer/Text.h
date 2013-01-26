@@ -46,6 +46,7 @@ namespace GlowingArcher {
         bool        Equal(Text *text) const;
 
         // Object overrides
+        virtual bool Dump(void) const;
         virtual bool Render(void) const;
 
     private:

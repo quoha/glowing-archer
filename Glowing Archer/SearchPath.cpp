@@ -32,7 +32,7 @@
 #include <cstring>
 #include <sys/stat.h>
 
-GlowingArcher::SearchPath::SearchPath(void) {
+GlowingArcher::SearchPath::SearchPath(void) : Object("GlowingArcher::SearchPath") {
     for (int idx = 0; idx < 128; idx++) {
         paths[idx] = 0;
     }
@@ -55,12 +55,14 @@ bool GlowingArcher::SearchPath::AddPath(GlowingArcher::Text *path) {
     return false;
 }
 
-void GlowingArcher::SearchPath::Dump(void) const {
+bool GlowingArcher::SearchPath::Dump(void) const {
+    printf("spath:\t%s\n", "*** dump ***");
     for (int idx = 0; idx < 128; idx++) {
         if (paths[idx]) {
             printf("%5d:\t%-18s == '%s'\n", idx, "searchPath", paths[idx]->CString());
         }
     }
+    return true;
 }
 
 GlowingArcher::Text *GlowingArcher::SearchPath::FindFile(GlowingArcher::Text *fileName) const {
