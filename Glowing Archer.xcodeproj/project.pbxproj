@@ -1,0 +1,215 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2DADB31816B3A1B40044AA43 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB31716B3A1B40044AA43 /* main.cpp */; };
+		2DADB31A16B3A1B40044AA43 /* Glowing_Archer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2DADB31116B3A1B40044AA43 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				2DADB31A16B3A1B40044AA43 /* Glowing_Archer.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2DADB31316B3A1B40044AA43 /* Glowing Archer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Glowing Archer"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DADB31716B3A1B40044AA43 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Glowing_Archer.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2DADB31016B3A1B40044AA43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2DADB30816B3A1B40044AA43 = {
+			isa = PBXGroup;
+			children = (
+				2DADB31616B3A1B40044AA43 /* Glowing Archer */,
+				2DADB31416B3A1B40044AA43 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2DADB31416B3A1B40044AA43 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2DADB31316B3A1B40044AA43 /* Glowing Archer */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2DADB31616B3A1B40044AA43 /* Glowing Archer */ = {
+			isa = PBXGroup;
+			children = (
+				2DADB31716B3A1B40044AA43 /* main.cpp */,
+				2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */,
+			);
+			path = "Glowing Archer";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2DADB31216B3A1B40044AA43 /* Glowing Archer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DADB31D16B3A1B40044AA43 /* Build configuration list for PBXNativeTarget "Glowing Archer" */;
+			buildPhases = (
+				2DADB30F16B3A1B40044AA43 /* Sources */,
+				2DADB31016B3A1B40044AA43 /* Frameworks */,
+				2DADB31116B3A1B40044AA43 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Glowing Archer";
+			productName = "Glowing Archer";
+			productReference = 2DADB31316B3A1B40044AA43 /* Glowing Archer */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2DADB30A16B3A1B40044AA43 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Michael Henderson";
+			};
+			buildConfigurationList = 2DADB30D16B3A1B40044AA43 /* Build configuration list for PBXProject "Glowing Archer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2DADB30816B3A1B40044AA43;
+			productRefGroup = 2DADB31416B3A1B40044AA43 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2DADB31216B3A1B40044AA43 /* Glowing Archer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2DADB30F16B3A1B40044AA43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DADB31816B3A1B40044AA43 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2DADB31B16B3A1B40044AA43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2DADB31C16B3A1B40044AA43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2DADB31E16B3A1B40044AA43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2DADB31F16B3A1B40044AA43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2DADB30D16B3A1B40044AA43 /* Build configuration list for PBXProject "Glowing Archer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DADB31B16B3A1B40044AA43 /* Debug */,
+				2DADB31C16B3A1B40044AA43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2DADB31D16B3A1B40044AA43 /* Build configuration list for PBXNativeTarget "Glowing Archer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DADB31E16B3A1B40044AA43 /* Debug */,
+				2DADB31F16B3A1B40044AA43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2DADB30A16B3A1B40044AA43 /* Project object */;
+}
