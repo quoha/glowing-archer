@@ -28,6 +28,7 @@
 //
 
 #include "Text.h"
+#include <stdio.h>
 #include <cstring>
 
 static const char *gaClassName = "GlowingArcher::Text";
@@ -105,4 +106,9 @@ bool GlowingArcher::Text::Equal(Text *text_) const {
         return true;
     }
     return false;
+}
+
+bool GlowingArcher::Text::Render(void) const {
+    printf(" text:\t%s\n", text);
+    return true;
 }

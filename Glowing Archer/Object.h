@@ -36,6 +36,9 @@ namespace GlowingArcher {
     public:
         Object(const char *className);
         ~Object();
+        
+        virtual bool Render(void) const;
+
     private:
         void       *id;
         const char *className;

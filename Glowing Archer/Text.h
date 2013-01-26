@@ -45,6 +45,9 @@ namespace GlowingArcher {
         const char *CString(void) const { return text; }
         bool        Equal(Text *text) const;
 
+        // Object overrides
+        virtual bool Render(void) const;
+
     private:
         int   length;
         char *text;
