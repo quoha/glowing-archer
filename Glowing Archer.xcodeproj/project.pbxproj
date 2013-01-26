@@ -11,6 +11,7 @@
 		2DADB31A16B3A1B40044AA43 /* Glowing_Archer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */; };
 		2DADB32216B3A3A60044AA43 /* SearchPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32016B3A3A60044AA43 /* SearchPath.cpp */; };
 		2DADB32516B3A5130044AA43 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32316B3A5130044AA43 /* Text.cpp */; };
+		2DADB32816B430D80044AA43 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32616B430D80044AA43 /* Object.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		2DADB32116B3A3A60044AA43 /* SearchPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPath.h; sourceTree = "<group>"; };
 		2DADB32316B3A5130044AA43 /* Text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Text.cpp; sourceTree = "<group>"; };
 		2DADB32416B3A5130044AA43 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
+		2DADB32616B430D80044AA43 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
+		2DADB32716B430D80044AA43 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 			isa = PBXGroup;
 			children = (
 				2DADB31716B3A1B40044AA43 /* main.cpp */,
+				2DADB32616B430D80044AA43 /* Object.cpp */,
+				2DADB32716B430D80044AA43 /* Object.h */,
 				2DADB32016B3A3A60044AA43 /* SearchPath.cpp */,
 				2DADB32116B3A3A60044AA43 /* SearchPath.h */,
 				2DADB32316B3A5130044AA43 /* Text.cpp */,
@@ -130,6 +135,7 @@
 				2DADB31816B3A1B40044AA43 /* main.cpp in Sources */,
 				2DADB32216B3A3A60044AA43 /* SearchPath.cpp in Sources */,
 				2DADB32516B3A5130044AA43 /* Text.cpp in Sources */,
+				2DADB32816B430D80044AA43 /* Object.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

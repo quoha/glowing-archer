@@ -30,7 +30,9 @@
 #include "Text.h"
 #include <cstring>
 
-GlowingArcher::Text::Text(const char *text_, int length_) {
+static const char *gaClassName = "GlowingArcher::Text";
+
+GlowingArcher::Text::Text(const char *text_, int length_) : Object(gaClassName) {
     if (length_ < 0) {
         length_ = (int)std::strlen(text_ ? text_ : "");
     }
@@ -44,7 +46,7 @@ GlowingArcher::Text::Text(const char *text_, int length_) {
     text[length] = 0;
 }
 
-GlowingArcher::Text::Text(Text *text_) {
+GlowingArcher::Text::Text(Text *text_) : Object(gaClassName) {
     if (!text_) {
         length = 0;
     } else {
@@ -57,7 +59,7 @@ GlowingArcher::Text::Text(Text *text_) {
     text[length] = 0;
 }
 
-GlowingArcher::Text::Text(Text *t1, Text *t2) {
+GlowingArcher::Text::Text(Text *t1, Text *t2) : Object(gaClassName) {
     length = 0;
     if (t1) {
         length += t1->length;

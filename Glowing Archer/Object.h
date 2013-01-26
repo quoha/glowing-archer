@@ -1,8 +1,8 @@
 //
-//  Text.h
+//  Object.h
 //  Glowing Archer
 //
-//  Created by Michael Henderson on 1/25/13.
+//  Created by Michael Henderson on 1/26/13.
 //
 // This file is part of Glowing Archer (http://github.com/quoha/glowing-archer).
 //
@@ -27,29 +27,20 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef __Glowing_Archer__Text__
-#define __Glowing_Archer__Text__
-
-#include "Object.h"
+#ifndef __Glowing_Archer__Object__
+#define __Glowing_Archer__Object__
 
 namespace GlowingArcher {
     
-    class Text : protected Object {
+    class Object {
     public:
-        Text(Text *text);
-        Text(Text *text1, Text *text2);
-        Text(const char *text, int length);
-        ~Text();
-
-        bool        Append(Text *text);
-        const char *CString(void) const { return text; }
-        bool        Equal(Text *text) const;
-
+        Object(const char *className);
+        ~Object();
     private:
-        int   length;
-        char *text;
-    }; // class Text
+        void       *id;
+        const char *className;
+    }; // class Object
     
 } // namespace GlowingArcher
 
-#endif /* defined(__Glowing_Archer__Text__) */
+#endif /* defined(__Glowing_Archer__Object__) */
