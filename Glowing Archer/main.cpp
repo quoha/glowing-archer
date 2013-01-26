@@ -29,6 +29,7 @@
 
 #include "Text.h"
 #include "SearchPath.h"
+#include "Stream.h"
 #include "SymbolTable.h"
 #include <stdio.h>
 #include <cstring>
@@ -61,6 +62,8 @@ try {
             } else {
                 printf(" info:\t%-20s == '%s'\n", "modelFile", val);
             }
+            GlowingArcher::InputStream *is = new GlowingArcher::InputStream(modelFile);
+            is->Dump();
         } else if (std::strcmp(opt, "verbose") == 0) {
             if (std::strcmp(val, "yes") == 0 || std::strcmp(val, "true") == 0) {
                 isVerbose = true;

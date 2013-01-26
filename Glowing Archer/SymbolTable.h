@@ -37,6 +37,8 @@ namespace GlowingArcher {
         SymbolTable(void);
         ~SymbolTable();
 
+        bool Add(char *name, char *value);
+
         // Object inheritance
         bool Dump(void) const;
 

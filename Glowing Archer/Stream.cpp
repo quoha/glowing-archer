@@ -81,6 +81,8 @@ GlowingArcher::InputStream::~InputStream() {
 
 bool GlowingArcher::InputStream::Dump(void) const {
     printf(" istr:\t*** dump %s\n", name->CString());
+    printf("%s\n", data);
+    printf("\t^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     return true;
 }
 
