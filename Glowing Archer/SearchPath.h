@@ -1,5 +1,5 @@
 //
-//  main.cpp
+//  SearchPath.h
 //  Glowing Archer
 //
 //  Created by Michael Henderson on 1/25/13.
@@ -27,10 +27,25 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-int main(int argc, const char * argv[])
-try {
-    return 0;
-} catch (...) {
-    return 0;
-}
+#ifndef __Glowing_Archer__SearchPath__
+#define __Glowing_Archer__SearchPath__
 
+#include "Text.h"
+
+namespace GlowingArcher {
+    
+    class SearchPath {
+    public:
+        SearchPath(void);
+        ~SearchPath();
+
+        bool  AddPath(Text *path);
+        Text *FindFile(Text *fileName);
+
+    private:
+        Text *paths[128];
+    }; // class SearchPath
+    
+} // namespace GlowingArcher
+
+#endif /* defined(__Glowing_Archer__SearchPath__) */

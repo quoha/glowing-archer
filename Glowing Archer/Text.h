@@ -1,5 +1,5 @@
 //
-//  main.cpp
+//  Text.h
 //  Glowing Archer
 //
 //  Created by Michael Henderson on 1/25/13.
@@ -27,10 +27,27 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-int main(int argc, const char * argv[])
-try {
-    return 0;
-} catch (...) {
-    return 0;
-}
+#ifndef __Glowing_Archer__Text__
+#define __Glowing_Archer__Text__
 
+namespace GlowingArcher {
+    
+    class Text {
+    public:
+        Text(Text *text);
+        Text(Text *text1, Text *text2);
+        Text(const char *text, int length);
+        ~Text();
+
+        bool        Append(Text *text);
+        const char *CString(void) const { return text; }
+        bool        Equal(Text *text) const;
+
+    private:
+        int   length;
+        char *text;
+    }; // class Text
+    
+} // namespace GlowingArcher
+
+#endif /* defined(__Glowing_Archer__Text__) */

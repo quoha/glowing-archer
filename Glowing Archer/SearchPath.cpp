@@ -1,5 +1,5 @@
 //
-//  main.cpp
+//  SearchPath.cpp
 //  Glowing Archer
 //
 //  Created by Michael Henderson on 1/25/13.
@@ -27,10 +27,51 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-int main(int argc, const char * argv[])
-try {
-    return 0;
-} catch (...) {
-    return 0;
+#include "SearchPath.h"
+#include <stdio.h>
+#include <cstring>
+#include <sys/stat.h>
+
+GlowingArcher::SearchPath::SearchPath(void) {
+    for (int idx = 0; idx < 128; idx++) {
+        paths[idx] = 0;
+    }
 }
 
+GlowingArcher::SearchPath::~SearchPath() {
+    for (int idx = 0; idx < 128; idx++) {
+        delete [] paths[idx];
+    }
+}
+
+bool GlowingArcher::SearchPath::AddPath(GlowingArcher::Text *path) {
+    int idx;
+    for (idx = 0; idx < 128; idx++) {
+        if (!paths[idx]) {
+            paths[idx] = new Text(path);
+            return true;
+        }
+    }
+    return false;
+}
+
+GlowingArcher::Text *GlowingArcher::SearchPath::FindFile(GlowingArcher::Text *fileName) {
+    Text *fullPath = 0;
+
+    for (int idx = 127; idx >= 0; idx++) {
+        if (paths[idx]) {
+            fullPath = new Text(paths[idx], fileName);
+
+            struct stat sb;
+            if (stat(fullPath->CString(), &sb) == 0 && S_ISREG(sb.st_mode)) {
+                // found file, return full path to it
+                //
+                break;
+            }
+            
+            delete fullPath;
+        }
+    }
+
+    return fullPath;
+}
