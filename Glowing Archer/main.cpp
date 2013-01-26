@@ -34,6 +34,7 @@
 
 int main(int argc, const char * argv[])
 try {
+    bool isVerbose = false;
     GlowingArcher::SearchPath *searchPath = new GlowingArcher::SearchPath;
     
     for (int idx = 1; idx < argc; idx++) {
@@ -48,8 +49,22 @@ try {
         }
 
         if (std::strcmp(opt, "model-file") == 0 && *val) {
-            GlowingArcher::Text *modelFile = new GlowingArcher::Text(val, -1);
-            printf(" info:\tloaded model '%s'\n", val);
+            GlowingArcher::Text *modelFile = searchPath->FindFile(new GlowingArcher::Text(val, -1));
+            if (!modelFile) {
+                printf("\nerror:\tunable to locate model file '%s'\n", val);
+                return 2;
+            }
+            if (isVerbose) {
+                printf(" info:\t%-20s == '%s'\n", "modelFile", modelFile->CString());
+            } else {
+                printf(" info:\t%-20s == '%s'\n", "modelFile", val);
+            }
+        } else if (std::strcmp(opt, "verbose") == 0) {
+            if (std::strcmp(val, "yes") == 0 || std::strcmp(val, "true") == 0) {
+                isVerbose = true;
+            } else {
+                isVerbose = false;
+            }
         } else if (std::strcmp(opt, "search-path") == 0 && *val) {
             searchPath->AddPath(new GlowingArcher::Text(val, -1));
         } else {

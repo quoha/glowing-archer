@@ -45,17 +45,35 @@ GlowingArcher::Text::Text(const char *text_, int length_) {
 }
 
 GlowingArcher::Text::Text(Text *text_) {
-    length = text_->length;
+    if (!text_) {
+        length = 0;
+    } else {
+        length = text_->length;
+    }
     text   = new char[length + 1];
-    std::memcpy(text, text_->text, length);
+    if (text_) {
+        std::memcpy(text, text_->text, length);
+    }
     text[length] = 0;
 }
 
 GlowingArcher::Text::Text(Text *t1, Text *t2) {
-    length = t1->length + t2->length;
-    text   = new char[length + 1];
-    std::memcpy(text, t1->text, t1->length);
-    std::memcpy(text + t1->length, t2->text, t2->length);
+    length = 0;
+    if (t1) {
+        length += t1->length;
+    }
+    if (t2) {
+        length += t2->length;
+    }
+    text = new char[length + 1];
+    if (t1 && t2) {
+        std::memcpy(text, t1->text, t1->length);
+        std::memcpy(text + t1->length, t2->text, t2->length);
+    } else if (t1) {
+        std::memcpy(text, t1->text, t1->length);
+    } else {
+        std::memcpy(text, t2->text, t2->length);
+    }
     text[length] = 0;
 }
 
@@ -64,23 +82,24 @@ GlowingArcher::Text::~Text() {
 }
 
 bool GlowingArcher::Text::Append(Text *text_) {
-    int   newLength = length + text_->length;
-    char *newText   = new char[newLength + 1];
-
-    std::memcpy(newText, text, length);
-    std::memcpy(newText + newLength, text_->text, text_->length);
-    newText[newLength] = 0;
-
-    delete [] text;
-    
-    text   = newText;
-    length = newLength;
-
+    if (text_) {
+        int   newLength = length + text_->length;
+        char *newText   = new char[newLength + 1];
+        
+        std::memcpy(newText, text, length);
+        std::memcpy(newText + newLength, text_->text, text_->length);
+        newText[newLength] = 0;
+        
+        delete [] text;
+        
+        text   = newText;
+        length = newLength;
+    }
     return true;
 }
 
 bool GlowingArcher::Text::Equal(Text *text_) const {
-    if (length == text_->length && std::strcmp(text, text_->text) == 0) {
+    if (text_ && length == text_->length && std::strcmp(text, text_->text) == 0) {
         return true;
     }
     return false;

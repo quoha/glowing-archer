@@ -66,7 +66,7 @@ void GlowingArcher::SearchPath::Dump(void) const {
 GlowingArcher::Text *GlowingArcher::SearchPath::FindFile(GlowingArcher::Text *fileName) const {
     Text *fullPath = 0;
 
-    for (int idx = 127; idx >= 0; idx++) {
+    for (int idx = 127; idx >= 0; idx--) {
         if (paths[idx]) {
             fullPath = new Text(paths[idx], fileName);
 
@@ -78,6 +78,7 @@ GlowingArcher::Text *GlowingArcher::SearchPath::FindFile(GlowingArcher::Text *fi
             }
             
             delete fullPath;
+            fullPath = 0;
         }
     }
 
