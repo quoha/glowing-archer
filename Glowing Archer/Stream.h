@@ -41,27 +41,25 @@ namespace GlowingArcher {
         InputStream(Text *fileName);
         ~InputStream();
 
-        bool  Close(void);
-        bool  Open(Text *fileName);
-
         Text *ErrorMessage(void) const { return errmsg; }
         bool  IsValid(void) const { return errmsg ? false : true; }
 
-        bool  EndOfStream(void) const;
-        bool  NextChar(void);
-        char  PeekChar(void);
+        bool  EndOfStream(void) const { return (curr < endOfData) ? false : true; }
+        bool  NextChar(void) { if (curr < endOfData && *(curr++) == '\n') { line++; } return (curr < endOfData) ? true : false; }
+        char  PeekChar(void) { return (curr < endOfData) ? *(curr + 1) : 0; }
         bool  SkipLine(void);
-        bool  SkipQuotedString(void);
         bool  SkipWhiteSpace(void);
+        bool  SkipWord(void);
 
         // Object inheritance
         bool Dump(void) const;
 
     private:
-        Text *sourceName;
+        Text *name;
         Text *errmsg;
         char *data;
         char *curr;
+        char *endOfData;
         int   line;
     }; // class InputStream
 
@@ -71,7 +69,6 @@ namespace GlowingArcher {
         ~OutputStream();
         
         bool  Close(void);
-        bool  Open(Text *fileName);
         bool  Redirect(Text *fileName);
 
         Text *ErrorMessage(void) const { return errmsg; }
@@ -86,7 +83,7 @@ namespace GlowingArcher {
         bool Dump(void) const;
 
     private:
-        Text *targetName;
+        Text *name;
         Text *errmsg;
         Text *data;
     }; // class OutputStream

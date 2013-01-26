@@ -28,3 +28,116 @@
 //
 
 #include "Stream.h"
+#include <stdio.h>
+#include <cstring>
+#include <ctype.h>
+#include <sys/stat.h>
+
+GlowingArcher::InputStream::InputStream(Text *fileName) : GlowingArcher::Object("GlowingArcher::InputStream") {
+    name   = fileName;
+    errmsg = 0;
+
+	struct stat statBuf;
+	if (stat(name->CString(), &statBuf) != 0) {
+        errmsg = new Text("file does not exist", -1);
+        data      = new char[1];
+        data[0]   = 0;
+        curr      = data;
+        endOfData = data;
+    } else {
+        // allocate enough space for the file and
+        // the new line plus nil terminator
+        //
+        int actLength       = (int)statBuf.st_size;
+        data = new char[actLength + 2];
+
+        // set those two extra bytes to zero so that we don't forget to
+        // do it later. they ensure that we end up nil-terminated.
+        //
+        std::memset(data, 0, actLength + 2);
+
+        // only do the file read if it has data in it
+        //
+        if (actLength > 0) {
+            FILE *fp = fopen(name->CString(), "r");
+            if (!fp || fread(data, statBuf.st_size, 1, fp) != 1) {
+                errmsg = new Text("should get the strerror", -1);
+            }
+            if (fp) {
+                fclose(fp);
+            }
+        }
+        curr      = data;
+        endOfData = data + actLength;
+    }
+
+    line = 1;
+}
+
+GlowingArcher::InputStream::~InputStream() {
+    delete [] data;
+    delete errmsg;
+}
+
+bool GlowingArcher::InputStream::Dump(void) const {
+    printf(" istr:\t*** dump %s\n", name->CString());
+    return true;
+}
+
+bool  GlowingArcher::InputStream::SkipLine(void) {
+    while (curr < endOfData && *curr != '\n') {
+        NextChar();
+    }
+    if (*curr == '\n') {
+        NextChar();
+        return true;
+    }
+    return false;
+}
+
+bool  GlowingArcher::InputStream::SkipWhiteSpace(void) {
+    if (curr >= endOfData || !isspace(*curr)) {
+        return false;
+    }
+    while (curr < endOfData && isspace(*curr)) {
+        NextChar();
+    }
+    return true;
+}
+
+// skips the current word. leaves curr pointing the
+// first character after the end of the current word.
+// assumes that if the first character of the current
+// word is either ' or ", then we are to skip the
+// quoted string. we allow escaped quotes in that string.
+//
+// returns false if there is no current word or if
+// there was no closing quote found on a quoted string.
+//
+bool  GlowingArcher::InputStream::SkipWord(void) {
+    if (curr >= endOfData || isspace(*curr)) {
+        return false;
+    }
+    char q = *curr;
+    NextChar();
+
+    if (q == '\'' || q == '"') {
+        while (curr < endOfData && *curr != q) {
+            if (*curr == '\'' && *(curr + 1) == q) {
+                NextChar();
+            }
+            NextChar();
+        }
+        if (*curr != q) {
+            return false;
+        }
+        NextChar();
+    } else {
+        while (curr < endOfData && !isspace(*curr)) {
+            NextChar();
+        }
+    }
+
+    return true;
+}
+
