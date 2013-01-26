@@ -13,6 +13,7 @@
 		2DADB32516B3A5130044AA43 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32316B3A5130044AA43 /* Text.cpp */; };
 		2DADB32816B430D80044AA43 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32616B430D80044AA43 /* Object.cpp */; };
 		2DADB32B16B465AF0044AA43 /* SymbolTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32916B465AE0044AA43 /* SymbolTable.cpp */; };
+		2DADB32E16B46D200044AA43 /* Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32C16B46D200044AA43 /* Stream.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,8 @@
 		2DADB32716B430D80044AA43 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
 		2DADB32916B465AE0044AA43 /* SymbolTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SymbolTable.cpp; sourceTree = "<group>"; };
 		2DADB32A16B465AF0044AA43 /* SymbolTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymbolTable.h; sourceTree = "<group>"; };
+		2DADB32C16B46D200044AA43 /* Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stream.cpp; sourceTree = "<group>"; };
+		2DADB32D16B46D200044AA43 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				2DADB31716B3A1B40044AA43 /* main.cpp */,
+				2DADB32C16B46D200044AA43 /* Stream.cpp */,
+				2DADB32D16B46D200044AA43 /* Stream.h */,
 				2DADB32616B430D80044AA43 /* Object.cpp */,
 				2DADB32716B430D80044AA43 /* Object.h */,
 				2DADB32016B3A3A60044AA43 /* SearchPath.cpp */,
@@ -142,6 +147,7 @@
 				2DADB32516B3A5130044AA43 /* Text.cpp in Sources */,
 				2DADB32816B430D80044AA43 /* Object.cpp in Sources */,
 				2DADB32B16B465AF0044AA43 /* SymbolTable.cpp in Sources */,
+				2DADB32E16B46D200044AA43 /* Stream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
