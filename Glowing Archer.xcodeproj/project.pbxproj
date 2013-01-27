@@ -16,6 +16,7 @@
 		2DADB32E16B46D200044AA43 /* Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32C16B46D200044AA43 /* Stream.cpp */; };
 		2DADB33116B4DB7B0044AA43 /* AST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32F16B4DB7B0044AA43 /* AST.cpp */; };
 		2DADB33416B4DD280044AA43 /* ModelFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB33216B4DD280044AA43 /* ModelFile.cpp */; };
+		2DADB33716B4E9130044AA43 /* ConfigFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB33516B4E9130044AA43 /* ConfigFile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +50,8 @@
 		2DADB33016B4DB7B0044AA43 /* AST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AST.h; sourceTree = "<group>"; };
 		2DADB33216B4DD280044AA43 /* ModelFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModelFile.cpp; sourceTree = "<group>"; };
 		2DADB33316B4DD280044AA43 /* ModelFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelFile.h; sourceTree = "<group>"; };
+		2DADB33516B4E9130044AA43 /* ConfigFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigFile.cpp; sourceTree = "<group>"; };
+		2DADB33616B4E9130044AA43 /* ConfigFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,8 @@
 				2DADB31716B3A1B40044AA43 /* main.cpp */,
 				2DADB32F16B4DB7B0044AA43 /* AST.cpp */,
 				2DADB33016B4DB7B0044AA43 /* AST.h */,
+				2DADB33516B4E9130044AA43 /* ConfigFile.cpp */,
+				2DADB33616B4E9130044AA43 /* ConfigFile.h */,
 				2DADB33216B4DD280044AA43 /* ModelFile.cpp */,
 				2DADB33316B4DD280044AA43 /* ModelFile.h */,
 				2DADB32C16B46D200044AA43 /* Stream.cpp */,
@@ -160,6 +165,7 @@
 				2DADB32E16B46D200044AA43 /* Stream.cpp in Sources */,
 				2DADB33116B4DB7B0044AA43 /* AST.cpp in Sources */,
 				2DADB33416B4DD280044AA43 /* ModelFile.cpp in Sources */,
+				2DADB33716B4E9130044AA43 /* ConfigFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
