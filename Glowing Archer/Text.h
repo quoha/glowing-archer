@@ -34,16 +34,18 @@
 
 namespace GlowingArcher {
     
-    class Text : protected Object {
+    class Text : public Object {
+
     public:
         Text(Text *text);
         Text(Text *text1, Text *text2);
         Text(const char *text, int length);
         ~Text();
 
-        bool        Append(Text *text);
-        const char *CString(void) const { return text; }
-        bool        Equal(Text *text) const;
+        bool         Append(Text *text);
+        const char  *CString(void) const { return text; }
+        bool         Equal(Text *text) const;
+        unsigned int Hash(void) const { return hash; }
 
         // Object overrides
         virtual bool Dump(void) const;
@@ -52,6 +54,7 @@ namespace GlowingArcher {
     private:
         int   length;
         char *text;
+        unsigned int hash;
     }; // class Text
     
 } // namespace GlowingArcher

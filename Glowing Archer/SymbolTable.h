@@ -29,20 +29,28 @@
 #define __Glowing_Archer__SymbolTable__
 
 #include "Object.h"
+#include "Text.h"
 
 namespace GlowingArcher {
     
-    class SymbolTable : protected Object {
+    class SymbolTable : public Object {
     public:
         SymbolTable(void);
         ~SymbolTable();
 
-        bool Add(char *name, char *value);
+        bool    Add(Text *name, Text *value);
+        Object *Lookup(Text *name);
 
         // Object inheritance
         bool Dump(void) const;
 
     private:
+        struct Entry {
+            unsigned int  hash;
+            Text         *name;
+            Object       *obj;
+            struct Entry *next;
+        } *table[1024];
     }; // class SymbolTable
     
 } // namespace GlowingArcher

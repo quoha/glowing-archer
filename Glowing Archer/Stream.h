@@ -36,7 +36,7 @@
 
 namespace GlowingArcher {
 
-    class InputStream : protected Object {
+    class InputStream : public Object {
     public:
         InputStream(Text *fileName);
         ~InputStream();
@@ -63,7 +63,7 @@ namespace GlowingArcher {
         int   line;
     }; // class InputStream
 
-    class OutputStream : protected Object {
+    class OutputStream : public Object {
     public:
         OutputStream(Text *fileName);
         ~OutputStream();

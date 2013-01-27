@@ -45,6 +45,11 @@ GlowingArcher::Text::Text(const char *text_, int length_) : Object(gaClassName) 
         std::memset(text, 0, length);
     }
     text[length] = 0;
+
+    hash = 0;
+    for (int idx = 0; idx < length; idx++) {
+		hash = (hash *  33) + text[idx];
+	}
 }
 
 GlowingArcher::Text::Text(Text *text_) : Object(gaClassName) {
@@ -58,6 +63,11 @@ GlowingArcher::Text::Text(Text *text_) : Object(gaClassName) {
         std::memcpy(text, text_->text, length);
     }
     text[length] = 0;
+
+    hash = 0;
+    for (int idx = 0; idx < length; idx++) {
+		hash = (hash *  33) + text[idx];
+	}
 }
 
 GlowingArcher::Text::Text(Text *t1, Text *t2) : Object(gaClassName) {
@@ -107,7 +117,7 @@ bool GlowingArcher::Text::Dump(void) const {
 }
 
 bool GlowingArcher::Text::Equal(Text *text_) const {
-    if (text_ && length == text_->length && std::strcmp(text, text_->text) == 0) {
+    if (text_ && length == text_->length && hash == text_->hash && std::strcmp(text, text_->text) == 0) {
         return true;
     }
     return false;

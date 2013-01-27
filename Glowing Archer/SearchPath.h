@@ -35,7 +35,7 @@
 
 namespace GlowingArcher {
     
-    class SearchPath : protected Object {
+    class SearchPath : public Object {
     public:
         SearchPath(void);
         ~SearchPath();
