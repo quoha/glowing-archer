@@ -29,6 +29,13 @@
 
 #include "ConfigFile.h"
 
+//
+// file       = (section)* .
+// section    = '[' '~'? SECTION_NAME ']' assignment* .
+// assignment = NAME '=' value? ';' (commment)? .
+// value      = QUOTE .* QUOTE
+// comment    = .* '\n' .
+//
 GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *is) {
     GlowingArcher::AST *root = 0;
     
