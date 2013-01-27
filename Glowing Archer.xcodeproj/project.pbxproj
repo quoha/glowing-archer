@@ -14,6 +14,8 @@
 		2DADB32816B430D80044AA43 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32616B430D80044AA43 /* Object.cpp */; };
 		2DADB32B16B465AF0044AA43 /* SymbolTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32916B465AE0044AA43 /* SymbolTable.cpp */; };
 		2DADB32E16B46D200044AA43 /* Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32C16B46D200044AA43 /* Stream.cpp */; };
+		2DADB33116B4DB7B0044AA43 /* AST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32F16B4DB7B0044AA43 /* AST.cpp */; };
+		2DADB33416B4DD280044AA43 /* ModelFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB33216B4DD280044AA43 /* ModelFile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,10 @@
 		2DADB32A16B465AF0044AA43 /* SymbolTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SymbolTable.h; sourceTree = "<group>"; };
 		2DADB32C16B46D200044AA43 /* Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stream.cpp; sourceTree = "<group>"; };
 		2DADB32D16B46D200044AA43 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
+		2DADB32F16B4DB7B0044AA43 /* AST.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AST.cpp; sourceTree = "<group>"; };
+		2DADB33016B4DB7B0044AA43 /* AST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AST.h; sourceTree = "<group>"; };
+		2DADB33216B4DD280044AA43 /* ModelFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModelFile.cpp; sourceTree = "<group>"; };
+		2DADB33316B4DD280044AA43 /* ModelFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelFile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,10 @@
 			isa = PBXGroup;
 			children = (
 				2DADB31716B3A1B40044AA43 /* main.cpp */,
+				2DADB32F16B4DB7B0044AA43 /* AST.cpp */,
+				2DADB33016B4DB7B0044AA43 /* AST.h */,
+				2DADB33216B4DD280044AA43 /* ModelFile.cpp */,
+				2DADB33316B4DD280044AA43 /* ModelFile.h */,
 				2DADB32C16B46D200044AA43 /* Stream.cpp */,
 				2DADB32D16B46D200044AA43 /* Stream.h */,
 				2DADB32616B430D80044AA43 /* Object.cpp */,
@@ -148,6 +158,8 @@
 				2DADB32816B430D80044AA43 /* Object.cpp in Sources */,
 				2DADB32B16B465AF0044AA43 /* SymbolTable.cpp in Sources */,
 				2DADB32E16B46D200044AA43 /* Stream.cpp in Sources */,
+				2DADB33116B4DB7B0044AA43 /* AST.cpp in Sources */,
+				2DADB33416B4DD280044AA43 /* ModelFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

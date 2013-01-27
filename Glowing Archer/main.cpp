@@ -31,6 +31,8 @@
 #include "SearchPath.h"
 #include "Stream.h"
 #include "SymbolTable.h"
+#include "AST.h"
+#include "ModelFile.h"
 #include <stdio.h>
 #include <cstring>
 
@@ -64,6 +66,11 @@ try {
             }
             GlowingArcher::InputStream *is = new GlowingArcher::InputStream(modelFile);
             is->Dump();
+            GlowingArcher::AST *ast = ParseModelFile(is);
+            if (!ast) {
+                printf("error:\terror parsing model file\n");
+                return 2;
+            }
         } else if (std::strcmp(opt, "verbose") == 0) {
             if (std::strcmp(val, "yes") == 0 || std::strcmp(val, "true") == 0) {
                 isVerbose = true;
