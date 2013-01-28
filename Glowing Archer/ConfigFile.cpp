@@ -41,7 +41,7 @@ struct PSTATE {
 // an undefined variable, a variable with a value of null, and a
 // variable with a value of the empty string.
 //
-// file       = (section)* .
+// file       = (section)* EOF .
 // section    = '[' '~'? SECTION_NAME ']' assignment* .
 // assignment = NAME '=' QUOTED_STRING? ';' '\n' .
 //
@@ -52,9 +52,9 @@ struct PSTATE {
 //
 static bool Accept(struct PSTATE *ps, const char *terminal);
 static bool Expect(struct PSTATE *ps, const char *terminal);
-static bool ParseFile(struct PSTATE *ps);
-static bool ParseSection(struct PSTATE *ps);
-static bool ParseAssignment(struct PSTATE *ps);
+static bool TranslateFile(struct PSTATE *ps);
+static bool TranslateSection(struct PSTATE *ps);
+static bool TranslateAssignment(struct PSTATE *ps);
 
 GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *is) {
     GlowingArcher::AST *root = 0;
@@ -79,30 +79,59 @@ bool Expect(struct PSTATE *ps, const char *terminal) {
     return false;
 }
 
-bool ParseFile(struct PSTATE *ps) {
-    while (ParseSection(ps)) {
-        //
+// while ch in first(section)
+//   translate(section)
+// if ch = EOF
+//   accept
+// else
+//   reject
+//
+bool TranslateFile(struct PSTATE *ps) {
+    GlowingArcher::InputStream *is = ps->is;
+    while (is->CurrChar() == '[') {
+        TranslateSection(ps);
     }
     return true;
 }
 
-bool ParseSection(struct PSTATE *ps) {
+// if ch = [
+//   accept
+//   if ch = ~
+//     accept
+//   if ch = sectionName
+//     accept
+//     if ch = ]
+//       accept
+//       while ch in first(assignment)
+//         translate(assignment)
+//     else
+//       reject
+//   else
+//     reject
+// else
+//   reject
+//
+bool TranslateSection(struct PSTATE *ps) {
     GlowingArcher::InputStream *is = ps->is;
-    if (is->CurrChar() != '[') {
+    if (is->CurrChar() == '[') {
+        is->NextChar();
+
+        bool isNot = false;
+        if (is->CurrChar() == '~') {
+            isNot = true;
+            is->NextChar();
+        }
+
+        const char *startSectionName = is->PCurr();
+        // pull out the section name
+        while (!is->EndOfStream() && is->CurrChar() != ']') {
+            is->NextChar();
+        }
+        
+
         return false;
     }
     is->NextChar();
-
-    bool isNot = (is->CurrChar() == '~') ? true : false;
-    if (isNot) {
-        is->NextChar();
-    }
-    const char *startName = is->PCurr();
-
-    // pull out the section name
-    while (!is->EndOfStream() && is->CurrChar() != ']') {
-        is->NextChar();
-    }
 
     if (is->CurrChar() != ']') {
         printf("error:\tinvalid section name\t");
@@ -118,6 +147,25 @@ bool ParseSection(struct PSTATE *ps) {
     return true;
 }
 
+// if ch = name
+//   accept
+//   if ch = =
+//     accept
+//     if ch = quotedString
+//       accept
+//     if ch = ;
+//       accept
+//       if ch = \n
+//         accept
+//       else
+//         reject
+//     else
+//       reject
+//   else
+//     reject
+// else
+//   reject
+//
 bool ParseAssignment(struct PSTATE *ps) {
     return true;
 }
