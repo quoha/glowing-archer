@@ -43,7 +43,12 @@ namespace GlowingArcher {
 
         Text *ErrorMessage(void) const { return errmsg; }
         bool  IsValid(void) const { return errmsg ? false : true; }
+        int   Line(void) const { return line; }
+        Text *Name(void) const { return name; }
 
+        const char *PCurr(void) const { return curr; }
+
+        char  CurrChar(void) const { return (curr < endOfData) ? *curr : 0; }
         bool  EndOfStream(void) const { return (curr < endOfData) ? false : true; }
         bool  NextChar(void) { if (curr < endOfData && *(curr++) == '\n') { line++; } return (curr < endOfData) ? true : false; }
         char  PeekChar(void) { return (curr < endOfData) ? *(curr + 1) : 0; }

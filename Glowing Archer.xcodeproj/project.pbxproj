@@ -91,12 +91,12 @@
 				2DADB33616B4E9130044AA43 /* ConfigFile.h */,
 				2DADB33216B4DD280044AA43 /* ModelFile.cpp */,
 				2DADB33316B4DD280044AA43 /* ModelFile.h */,
-				2DADB32C16B46D200044AA43 /* Stream.cpp */,
-				2DADB32D16B46D200044AA43 /* Stream.h */,
 				2DADB32616B430D80044AA43 /* Object.cpp */,
 				2DADB32716B430D80044AA43 /* Object.h */,
 				2DADB32016B3A3A60044AA43 /* SearchPath.cpp */,
 				2DADB32116B3A3A60044AA43 /* SearchPath.h */,
+				2DADB32C16B46D200044AA43 /* Stream.cpp */,
+				2DADB32D16B46D200044AA43 /* Stream.h */,
 				2DADB32916B465AE0044AA43 /* SymbolTable.cpp */,
 				2DADB32A16B465AF0044AA43 /* SymbolTable.h */,
 				2DADB32316B3A5130044AA43 /* Text.cpp */,
@@ -256,6 +256,7 @@
 				2DADB31F16B3A1B40044AA43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
