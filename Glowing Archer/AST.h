@@ -39,14 +39,30 @@ namespace GlowingArcher {
         AST(void);
         ~AST();
 
+        virtual AST *Next(void);
+
+        void Next(AST *next);
+
         // Object inheritance
         //
         virtual bool Dump(void) const;
         virtual bool Render(void) const;
 
     private:
+        AST *next;
     }; // class AST
-    
+
+    class AST_NoOp : public AST {
+    public:
+        AST_NoOp(void);
+        ~AST_NoOp(void);
+
+        // Object inheritance
+        //
+        bool Dump(void) const;
+        bool Render(void) const;
+    private:
+    }; // class AST_NoOp
 } // namespace GlowingArcher
 
 #endif /* defined(__Glowing_Archer__AST__) */

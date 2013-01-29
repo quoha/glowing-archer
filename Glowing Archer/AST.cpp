@@ -28,6 +28,7 @@
 //
 
 #include "AST.h"
+#include <stdio.h>
 
 GlowingArcher::AST::AST(void) : GlowingArcher::Object("GlowingArcher::AST") {
     //
@@ -41,6 +42,31 @@ bool GlowingArcher::AST::Dump(void) const {
     return true;
 }
 
+GlowingArcher::AST *GlowingArcher::AST::Next(void) {
+    return next;
+}
+
+void GlowingArcher::AST::Next(GlowingArcher::AST *next_) {
+    next = next_;
+}
+
 bool GlowingArcher::AST::Render(void) const {
+    return true;
+}
+
+GlowingArcher::AST_NoOp::AST_NoOp(void) {
+    //
+}
+
+GlowingArcher::AST_NoOp::~AST_NoOp() {
+    //
+}
+
+bool GlowingArcher::AST_NoOp::Dump(void) const {
+    printf("  ast:\tno-op\n");
+    return true;
+}
+
+bool GlowingArcher::AST_NoOp::Render(void) const {
     return true;
 }

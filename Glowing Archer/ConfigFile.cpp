@@ -58,7 +58,8 @@ static bool TranslateSection(struct PSTATE *ps);
 static bool TranslateAssignment(struct PSTATE *ps);
 
 GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *is) {
-    GlowingArcher::AST *root = 0;
+    GlowingArcher::AST *root = new GlowingArcher::AST_NoOp;
+    GlowingArcher::AST *tail = root;
 
     struct PSTATE ps;
     ps.is = is;
@@ -79,6 +80,8 @@ GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *i
         printf("parse:\terror - expected to find EOF on line %d\n", ps.is->Line());
         return 0;
     }
+
+    //tail->Append(new GlowingArcher::AST_NoOp);
 
     return root;
 }
