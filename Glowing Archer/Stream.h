@@ -52,7 +52,10 @@ namespace GlowingArcher {
         bool  EndOfStream(void) const { return (curr < endOfData) ? false : true; }
         bool  NextChar(void) { if (curr < endOfData && *(curr++) == '\n') { line++; } return (curr < endOfData) ? true : false; }
         char  PeekChar(void) { return (curr < endOfData) ? *(curr + 1) : 0; }
+        bool  SkipAlnum(void);
         bool  SkipLine(void);
+        bool  SkipNumber(void);
+        bool  SkipString(void);
         bool  SkipWhiteSpace(void);
         bool  SkipWord(void);
 

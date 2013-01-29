@@ -70,8 +70,10 @@ GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *i
     // else
     //   reject
     //
+    AcceptWhiteSpace(&ps);
     while (ps.is->CurrChar() == '[') {
         TranslateSection(&ps);
+        AcceptWhiteSpace(&ps);
     }
     if (!AcceptTerminal(&ps, "EOF")) {
         printf("parse:\terror - expected to find EOF on line %d\n", ps.is->Line());
@@ -97,20 +99,27 @@ bool AcceptTerminal(struct PSTATE *ps, const char *terminal) {
     AcceptWhiteSpace(ps);
     if (std::strcmp(terminal, "EOF") == 0) {
         return ps->is->EndOfStream();
-    } else if (std::strcmp(terminal, "name")) {
+    } else if (std::strcmp(terminal, "name") == 0) {
         int length = 0;
         while (!ps->is->EndOfStream() && isalnum(ps->is->CurrChar())) {
             ps->is->NextChar();
             length++;
         }
         return (length > 0) ? true : false;
-    } else if (std::strcmp(terminal, "sectionName")) {
+    } else if (std::strcmp(terminal, "sectionName") == 0) {
         int length = 0;
-        while (!ps->is->EndOfStream() && isalnum(ps->is->CurrChar())) {
+        if (ps->is->CurrChar() == '*') {
             ps->is->NextChar();
-            length++;
+            length = 1;
+        } else {
+            while (!ps->is->EndOfStream() && isalnum(ps->is->CurrChar())) {
+                ps->is->NextChar();
+                length++;
+            }
         }
         return (length > 0) ? true : false;
+    } else if (std::strcmp(terminal, "value") == 0) {
+        return ps->is->SkipWord();
     }
     printf("parse:\taccept doesn't understand terminal '%s'\n", terminal);
     return false;
@@ -118,13 +127,9 @@ bool AcceptTerminal(struct PSTATE *ps, const char *terminal) {
 
 bool AcceptWhiteSpace(struct PSTATE *ps) {
     while (true) {
-        while (!ps->is->EndOfStream() && !isspace(ps->is->CurrChar())) {
-            ps->is->NextChar();
-        }
+        ps->is->SkipWhiteSpace();
         if (ps->is->CurrChar() == '/' && ps->is->PeekChar() == '/') {
-            while (!ps->is->EndOfStream() && ps->is->CurrChar() != '\n') {
-                ps->is->NextChar();
-            }
+            ps->is->SkipLine();
             continue;
         }
         break;
@@ -167,6 +172,7 @@ bool TranslateSection(struct PSTATE *ps) {
         const char *startSectionName = ps->is->PCurr();
         if (AcceptTerminal(ps, "sectionName")) {
             GlowingArcher::Text *sectionName = new GlowingArcher::Text(startSectionName, (int)(ps->is->PCurr() - startSectionName));
+            printf("parse:\tsection %s on line %d\n", sectionName->CString(), ps->is->Line());
             if (AcceptLiteral(ps, "]")) {
                 AcceptWhiteSpace(ps);
                 while (!ps->is->EndOfStream() && isalpha(ps->is->CurrChar())) {
@@ -214,14 +220,18 @@ bool TranslateAssignment(struct PSTATE *ps) {
     const char *startName = ps->is->PCurr();
     if (AcceptTerminal(ps, "name")) {
         GlowingArcher::Text *assignmentName = new GlowingArcher::Text(startName, (int)(ps->is->PCurr() - startName));
+        printf("parse:\tassign %s on line %d\n", assignmentName->CString(), ps->is->Line());
         bool isNull = true;
         if (AcceptLiteral(ps, "=")) {
             AcceptWhiteSpace(ps);
-            isNull  = AcceptLiteral(ps, "null");
-            if (!isNull && !AcceptTerminal(ps, "quotedString")) {
+            const char *startValue = ps->is->PCurr();
+            if (!AcceptTerminal(ps, "value")) {
                 printf("parse:\tassignment must be null or a quoted string on line %d\n", ps->is->Line());
                 return false;
             }
+            GlowingArcher::Text *value = new GlowingArcher::Text(startValue, (int)(ps->is->PCurr() - startValue));
+            printf("parse:\t_value %s on line %d\n", value->CString(), ps->is->Line());
+            isNull = std::strcmp(value->CString(), "null") == 0;
             if (!AcceptLiteral(ps, ";")) {
                 printf("parse:\tassignment must be terminated on line %d\n", ps->is->Line());
                 return false;

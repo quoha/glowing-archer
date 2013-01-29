@@ -32,6 +32,7 @@
 #include "Stream.h"
 #include "SymbolTable.h"
 #include "AST.h"
+#include "ConfigFile.h"
 #include "ModelFile.h"
 #include <stdio.h>
 #include <cstring>
@@ -53,24 +54,42 @@ try {
             *(val++) = 0;
         }
 
-        if (std::strcmp(opt, "model-file") == 0 && *val) {
-            GlowingArcher::Text *modelFile = searchPath->FindFile(new GlowingArcher::Text(val, -1));
-            if (!modelFile) {
-                printf("\nerror:\tunable to locate model file '%s'\n", val);
+        if (std::strcmp(opt, "config-file") == 0 && *val) {
+            GlowingArcher::Text *cfgFile = searchPath->FindFile(new GlowingArcher::Text(val, -1));
+            if (!cfgFile) {
+                printf("\nerror:\tunable to locate config file '%s'\n", val);
                 return 2;
             }
             if (isVerbose) {
-                printf(" info:\t%-20s == '%s'\n", "modelFile", modelFile->CString());
+                printf(" info:\t%-20s == '%s'\n", "configFile", cfgFile->CString());
             } else {
-                printf(" info:\t%-20s == '%s'\n", "modelFile", val);
+                printf(" info:\t%-20s == '%s'\n", "configFile", val);
             }
-            GlowingArcher::InputStream *is = new GlowingArcher::InputStream(modelFile);
+            GlowingArcher::InputStream *is = new GlowingArcher::InputStream(cfgFile);
             is->Dump();
-            GlowingArcher::AST *ast = ParseModelFile(is);
+            GlowingArcher::AST *ast = ParseConfigFile(is);
             if (!ast) {
-                printf("error:\terror parsing model file\n");
+                printf("error:\terror parsing config file\n");
                 return 2;
             }
+        } else if (std::strcmp(opt, "model-file") == 0 && *val) {
+                GlowingArcher::Text *modelFile = searchPath->FindFile(new GlowingArcher::Text(val, -1));
+                if (!modelFile) {
+                    printf("\nerror:\tunable to locate model file '%s'\n", val);
+                    return 2;
+                }
+                if (isVerbose) {
+                    printf(" info:\t%-20s == '%s'\n", "modelFile", modelFile->CString());
+                } else {
+                    printf(" info:\t%-20s == '%s'\n", "modelFile", val);
+                }
+                GlowingArcher::InputStream *is = new GlowingArcher::InputStream(modelFile);
+                is->Dump();
+                GlowingArcher::AST *ast = ParseModelFile(is);
+                if (!ast) {
+                    printf("error:\terror parsing model file\n");
+                    return 2;
+                }
         } else if (std::strcmp(opt, "verbose") == 0) {
             if (std::strcmp(val, "yes") == 0 || std::strcmp(val, "true") == 0) {
                 isVerbose = true;

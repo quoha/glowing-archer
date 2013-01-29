@@ -86,6 +86,16 @@ bool GlowingArcher::InputStream::Dump(void) const {
     return true;
 }
 
+bool  GlowingArcher::InputStream::SkipAlnum(void) {
+    if (curr >= endOfData || !isalnum(*curr)) {
+        return false;
+    }
+    while (curr < endOfData && isalnum(*curr)) {
+        NextChar();
+    }
+    return true;
+}
+
 bool  GlowingArcher::InputStream::SkipLine(void) {
     while (curr < endOfData && *curr != '\n') {
         NextChar();
@@ -95,6 +105,51 @@ bool  GlowingArcher::InputStream::SkipLine(void) {
         return true;
     }
     return false;
+}
+
+bool  GlowingArcher::InputStream::SkipNumber(void) {
+    if (curr >= endOfData || !isdigit(*curr)) {
+        return false;
+    }
+    while (curr < endOfData && isdigit(*curr)) {
+        NextChar();
+    }
+    if (curr < endOfData && *curr == '.') {
+        NextChar();
+        while (curr < endOfData && isdigit(*curr)) {
+            NextChar();
+        }
+    }
+    return true;
+}
+
+// if the current word is a quoted string, then the
+// word is skipped. leaves curr pointing the
+// first character after the end of the current word.
+// we allow escaped quotes in that string.
+//
+// returns false if there is no string or if there
+// was no closing quote found on.
+//
+bool  GlowingArcher::InputStream::SkipString(void) {
+    if (curr >= endOfData || !(*curr == '\'' || *curr == '"')) {
+        return false;
+    }
+    char q = *curr;
+    NextChar();
+    
+    while (curr < endOfData && *curr != q) {
+        if (*curr == '\'' && *(curr + 1) == q) {
+            NextChar();
+        }
+        NextChar();
+    }
+    if (*curr != q) {
+        return false;
+    }
+    NextChar();
+    
+    return true;
 }
 
 bool  GlowingArcher::InputStream::SkipWhiteSpace(void) {
@@ -120,24 +175,13 @@ bool  GlowingArcher::InputStream::SkipWord(void) {
     if (curr >= endOfData || isspace(*curr)) {
         return false;
     }
-    char q = *curr;
-    NextChar();
 
-    if (q == '\'' || q == '"') {
-        while (curr < endOfData && *curr != q) {
-            if (*curr == '\'' && *(curr + 1) == q) {
-                NextChar();
-            }
-            NextChar();
-        }
-        if (*curr != q) {
-            return false;
-        }
+    if (*curr == '\'' || *curr == '"') {
+        return SkipString();
+    }
+
+    while (curr < endOfData && !isspace(*curr)) {
         NextChar();
-    } else {
-        while (curr < endOfData && !isspace(*curr)) {
-            NextChar();
-        }
     }
 
     return true;
