@@ -57,6 +57,8 @@ static bool Expect(struct PSTATE *ps, const char *terminal);
 static bool TranslateSection(struct PSTATE *ps);
 static bool TranslateAssignment(struct PSTATE *ps);
 
+// by fiat, all AST's start and end with a no-op
+//
 GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *is) {
     GlowingArcher::AST *root = new GlowingArcher::AST_NoOp;
     GlowingArcher::AST *tail = root;
