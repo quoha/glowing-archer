@@ -33,6 +33,8 @@
 #include <ctype.h>
 #include <cstring>
 
+// parser state
+//
 struct PSTATE {
     GlowingArcher::InputStream *is;
 };
