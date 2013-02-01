@@ -37,6 +37,7 @@
 //
 struct PSTATE {
     GlowingArcher::InputStream *is;
+    void                       *data;
 };
 
 // for reasons that i don't understand, there is a difference between
