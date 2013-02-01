@@ -39,6 +39,8 @@
 
 int main(int argc, const char * argv[])
 try {
+    printf(" todo:\timplement AST\n");
+
     bool isVerbose = false;
     GlowingArcher::SearchPath  *searchPath = new GlowingArcher::SearchPath;
     GlowingArcher::SymbolTable *symtab     = new GlowingArcher::SymbolTable;
