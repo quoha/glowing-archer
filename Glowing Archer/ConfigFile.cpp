@@ -53,6 +53,7 @@ struct PSTATE {
 //    accepting terminals
 //    parsing   non-terminals
 //
+//
 static bool AcceptLiteral(struct PSTATE *ps, const char *literal);
 static bool AcceptTerminal(struct PSTATE *ps, const char *terminal);
 static bool AcceptWhiteSpace(struct PSTATE *ps);
