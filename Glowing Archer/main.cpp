@@ -111,6 +111,7 @@ try {
     
     return 0;
 } catch (...) {
+    // do something with the exception
     return 0;
 }
 
