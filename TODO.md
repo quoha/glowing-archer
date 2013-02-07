@@ -7,3 +7,4 @@ Glowing Archer
 # Add a LICENSE/COPYING file file
 
 # Decide on AST or not AST
+	An AST should be executable
