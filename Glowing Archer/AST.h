@@ -34,6 +34,8 @@
 
 namespace GlowingArcher {
     
+    // generic AST is simply a no-op
+    //
     class AST : public Object {
     public:
         AST(void);
@@ -65,18 +67,6 @@ namespace GlowingArcher {
         AST *ifFalse;
     }; // class AST_If
 
-    class AST_NoOp : public AST {
-    public:
-        AST_NoOp(void);
-        ~AST_NoOp(void);
-
-        // Object inheritance
-        //
-        bool Dump(void) const;
-        AST *Execute(void);
-    private:
-    }; // class AST_NoOp
-
     class AST_Text : public AST {
     public:
         AST_Text(const char *text, int length, bool isTainted);
@@ -92,6 +82,18 @@ namespace GlowingArcher {
         int         length;
     }; // class AST_Text
 
+    class AST_Word : public AST {
+    public:
+        AST_Word(void);
+        ~AST_Word(void);
+        
+        // Object inheritance
+        //
+        bool Dump(void) const;
+        AST *Execute(void);
+    private:
+    }; // class AST_Word
+    
 } // namespace GlowingArcher
 
 #endif /* defined(__Glowing_Archer__AST__) */

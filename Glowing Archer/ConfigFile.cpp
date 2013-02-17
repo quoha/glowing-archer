@@ -64,7 +64,7 @@ static bool TranslateAssignment(struct PSTATE *ps);
 // by fiat, all AST's start and end with a no-op
 //
 GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *is) {
-    GlowingArcher::AST *root = new GlowingArcher::AST_NoOp;
+    GlowingArcher::AST *root = new GlowingArcher::AST;
     GlowingArcher::AST *tail = root;
 
     struct PSTATE ps;
@@ -87,7 +87,7 @@ GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *i
         return 0;
     }
 
-    //tail->Append(new GlowingArcher::AST_NoOp);
+    //tail->Append(new GlowingArcher::AST);
 
     return root;
 }

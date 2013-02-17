@@ -43,24 +43,8 @@ GlowingArcher::AST *GlowingArcher::AST::Execute(void) {
 }
 
 bool GlowingArcher::AST::Dump(void) const {
-    return true;
-}
-
-GlowingArcher::AST_NoOp::AST_NoOp(void) {
-    //
-}
-
-GlowingArcher::AST_NoOp::~AST_NoOp() {
-    //
-}
-
-bool GlowingArcher::AST_NoOp::Dump(void) const {
     printf("  ast:\tno-op\n");
     return true;
-}
-
-GlowingArcher::AST *GlowingArcher::AST_NoOp::Execute(void) {
-    return Next();
 }
 
 GlowingArcher::AST_Text::AST_Text(const char *text_, int length_, bool isTainted_) {
@@ -74,7 +58,7 @@ GlowingArcher::AST_Text::~AST_Text() {
 }
 
 bool GlowingArcher::AST_Text::Dump(void) const {
-    printf("  ast:\ttext\n");
+    printf("  ast:\ttext%s\n", isTainted ? " is tainted" : "");
     return true;
 }
 
@@ -83,3 +67,25 @@ GlowingArcher::AST *GlowingArcher::AST_Text::Execute(void) {
     // return the next AST in the tree
     return Next();
 }
+
+GlowingArcher::AST_Word::AST_Word(void) {
+    //
+}
+
+GlowingArcher::AST_Word::~AST_Word() {
+    //
+}
+
+bool GlowingArcher::AST_Word::Dump(void) const {
+    printf("  ast:\tword\n");
+    return true;
+}
+
+GlowingArcher::AST *GlowingArcher::AST_Word::Execute(void) {
+    // lookup word in the symbol table if needed
+    // execute the word
+    // if it failed, return an error
+    // otherwise, return the next node to execute
+    return Next();
+}
+
