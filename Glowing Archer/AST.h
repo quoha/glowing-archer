@@ -39,18 +39,31 @@ namespace GlowingArcher {
         AST(void);
         ~AST();
 
-        virtual AST *Next(void);
-
-        void Next(AST *next);
+        AST *Next(void) const { return next; }
+        void Next(AST *next_) { next = next_; }
 
         // Object inheritance
         //
         virtual bool Dump(void) const;
-        virtual bool Render(void) const;
+        virtual AST *Execute(void);
 
     private:
         AST *next;
     }; // class AST
+
+    class AST_If : public AST {
+    public:
+        AST_If(AST *branchIfTrue, AST *branchIfFalse);
+        ~AST_If(void);
+
+        // Object inheritance
+        //
+        bool Dump(void) const;
+        AST *Execute(void);
+    private:
+        AST *ifTrue;
+        AST *ifFalse;
+    }; // class AST_If
 
     class AST_NoOp : public AST {
     public:
@@ -60,9 +73,25 @@ namespace GlowingArcher {
         // Object inheritance
         //
         bool Dump(void) const;
-        bool Render(void) const;
+        AST *Execute(void);
     private:
     }; // class AST_NoOp
+
+    class AST_Text : public AST {
+    public:
+        AST_Text(const char *text, int length, bool isTainted);
+        ~AST_Text(void);
+        
+        // Object inheritance
+        //
+        bool Dump(void) const;
+        AST *Execute(void);
+    private:
+        bool        isTainted;
+        const char *text;
+        int         length;
+    }; // class AST_Text
+
 } // namespace GlowingArcher
 
 #endif /* defined(__Glowing_Archer__AST__) */

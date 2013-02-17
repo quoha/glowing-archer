@@ -38,19 +38,11 @@ GlowingArcher::AST::~AST() {
     //
 }
 
+GlowingArcher::AST *GlowingArcher::AST::Execute(void) {
+    return Next();
+}
+
 bool GlowingArcher::AST::Dump(void) const {
-    return true;
-}
-
-GlowingArcher::AST *GlowingArcher::AST::Next(void) {
-    return next;
-}
-
-void GlowingArcher::AST::Next(GlowingArcher::AST *next_) {
-    next = next_;
-}
-
-bool GlowingArcher::AST::Render(void) const {
     return true;
 }
 
@@ -67,6 +59,27 @@ bool GlowingArcher::AST_NoOp::Dump(void) const {
     return true;
 }
 
-bool GlowingArcher::AST_NoOp::Render(void) const {
+GlowingArcher::AST *GlowingArcher::AST_NoOp::Execute(void) {
+    return Next();
+}
+
+GlowingArcher::AST_Text::AST_Text(const char *text_, int length_, bool isTainted_) {
+    text      = text_;
+    length    = length_;
+    isTainted = isTainted_;
+}
+
+GlowingArcher::AST_Text::~AST_Text() {
+    //
+}
+
+bool GlowingArcher::AST_Text::Dump(void) const {
+    printf("  ast:\ttext\n");
     return true;
+}
+
+GlowingArcher::AST *GlowingArcher::AST_Text::Execute(void) {
+    // push the text onto the stack
+    // return the next AST in the tree
+    return Next();
 }
