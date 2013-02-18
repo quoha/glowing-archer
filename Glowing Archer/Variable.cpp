@@ -28,3 +28,7 @@
 //
 
 #include "Variable.h"
+#include "AST.h"
+#include "Stack.h"
+#include "Text.h"
+

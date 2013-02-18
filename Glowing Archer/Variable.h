@@ -30,62 +30,36 @@
 #ifndef __Glowing_Archer__Variable__
 #define __Glowing_Archer__Variable__
 
+#include "Stack.h"
+#include "SymbolTable.h"
 #include "Text.h"
+#include "Value.h"
 
 namespace GlowingArcher {
+    
     class Variable {
     public:
-        Variable(Text *name);
+        Variable(Text *name, Value *value);
         virtual ~Variable();
         
-        Text *Name(void) { return name; }
-        virtual bool Dump(void) const;
-        virtual bool Execute(class SymbolTable *symtab, class Stack *stack);
-        virtual bool Render(void) const;
-
+        class Text  *Name(void) { return name; }
+        
+        bool Dump(void) const {
+            return value->Dump();
+        }
+        bool Execute(SymbolTable *symtab, Stack *stack) {
+            return value->Execute(symtab, stack);
+        }
+        bool Render(void) const {
+            return value->Render();
+        }
+        
     private:
-        Text *name;
+        Text  *name;
+        Value *value;
     }; // class Variable
-
-    class VarAST : public Variable {
-    public:
-        VarAST(Text *name, class AST *ast);
-        ~VarAST();
-    private:
-        class AST *ast;
-    }; // class VarAST
     
-    class VarCFunc : public Variable {
-    public:
-        VarCFunc(Text *name, int value);
-        ~VarCFunc();
-    private:
-    }; // class VarCFunc
-
-    class VarNumber : public Variable {
-    public:
-        VarNumber(Text *name, int value);
-        ~VarNumber();
-    private:
-        int value;
-    }; // class VarNumber
     
-    class VarStack : public Variable {
-    public:
-        VarStack(Text *name, class Stack *value);
-        ~VarStack();
-    private:
-        class Stack *value;
-    }; // class VarText
-
-    class VarText : public Variable {
-    public:
-        VarText(Text *name, Text *value);
-        ~VarText();
-    private:
-        Text *value;
-    }; // class VarText
-
 } // namespace GlowingArcher
 
 #endif /* defined(__Glowing_Archer__Variable__) */

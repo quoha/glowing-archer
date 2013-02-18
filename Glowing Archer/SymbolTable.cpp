@@ -26,6 +26,8 @@
 //
 
 #include "SymbolTable.h"
+#include "Text.h"
+#include "Value.h"
 #include <stdio.h>
 
 GlowingArcher::SymbolTable::SymbolTable(void) {
@@ -45,22 +47,22 @@ GlowingArcher::SymbolTable::~SymbolTable() {
     }
 }
 
-bool GlowingArcher::SymbolTable::Add(Text *name, Text *value) {
+bool GlowingArcher::SymbolTable::Add(Text *name, Value *value) {
     SymbolTableEntry *e = new SymbolTableEntry;
-    e->hash        = value->Hash();
+    e->hash        = name->Hash();
     e->name        = name;
-    e->value.text  = value;
+    e->value       = value;
     e->next        = table[e->hash];
     table[e->hash] = e;
     return true;
 }
 
-GlowingArcher::SymbolTableEntry *GlowingArcher::SymbolTable::Lookup(Text *name) {
+GlowingArcher::Value *GlowingArcher::SymbolTable::Lookup(Text *name) {
     SymbolTableEntry *e = table[name->Hash()];
     while (e && !name->Equal(e->name)) {
         e = e->next;
     }
-    return e;
+    return e ? e->value : 0;
 }
 
 bool GlowingArcher::SymbolTable::Dump(void) const {

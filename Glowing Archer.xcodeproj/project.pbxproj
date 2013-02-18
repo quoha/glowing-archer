@@ -19,6 +19,7 @@
 		2DADB33116B4DB7B0044AA43 /* AST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32F16B4DB7B0044AA43 /* AST.cpp */; };
 		2DADB33416B4DD280044AA43 /* ModelFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB33216B4DD280044AA43 /* ModelFile.cpp */; };
 		2DADB33716B4E9130044AA43 /* ConfigFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB33516B4E9130044AA43 /* ConfigFile.cpp */; };
+		2DC2C34416D27809002A401B /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C34216D27809002A401B /* Value.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +59,8 @@
 		2DADB33316B4DD280044AA43 /* ModelFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelFile.h; sourceTree = "<group>"; };
 		2DADB33516B4E9130044AA43 /* ConfigFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigFile.cpp; sourceTree = "<group>"; };
 		2DADB33616B4E9130044AA43 /* ConfigFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFile.h; sourceTree = "<group>"; };
+		2DC2C34216D27809002A401B /* Value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Value.cpp; sourceTree = "<group>"; };
+		2DC2C34316D27809002A401B /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				2DADB32A16B465AF0044AA43 /* SymbolTable.h */,
 				2DADB32316B3A5130044AA43 /* Text.cpp */,
 				2DADB32416B3A5130044AA43 /* Text.h */,
+				2DC2C34216D27809002A401B /* Value.cpp */,
+				2DC2C34316D27809002A401B /* Value.h */,
 				2D32044916D1E04C008B3F5F /* Variable.cpp */,
 				2D32044A16D1E04C008B3F5F /* Variable.h */,
 				2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */,
@@ -178,6 +183,7 @@
 				2DADB33716B4E9130044AA43 /* ConfigFile.cpp in Sources */,
 				2D32044816D1C0CB008B3F5F /* Stack.cpp in Sources */,
 				2D32044B16D1E04C008B3F5F /* Variable.cpp in Sources */,
+				2DC2C34416D27809002A401B /* Value.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

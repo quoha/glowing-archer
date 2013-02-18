@@ -109,8 +109,8 @@ bool GlowingArcher::AST_Word::Dump(void) const {
 
 GlowingArcher::AST *GlowingArcher::AST_Word::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
     // lookup word in the symbol table if needed
-    SymbolTableEntry *e = symtab->Lookup(name);
-    if (!e) {
+    Value *v = symtab->Lookup(name);
+    if (!v) {
         printf("error:\tundefined word '%s'\n", name->CString());
         return 0;
     }

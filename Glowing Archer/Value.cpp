@@ -1,8 +1,10 @@
 //
-//  SymbolTable.h
+//  Value.cpp
 //  Glowing Archer
 //
-//  Created by Michael Henderson on 1/26/13.
+//  Created by Michael Henderson on 2/18/13.
+//
+// This file is part of Glowing Archer (http://github.com/quoha/glowing-archer).
 //
 // Copyright (c) 2013 Michael D Henderson
 //
@@ -25,29 +27,5 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef __Glowing_Archer__SymbolTable__
-#define __Glowing_Archer__SymbolTable__
+#include "Value.h"
 
-namespace GlowingArcher {
-
-    class SymbolTable {
-    public:
-        SymbolTable(void);
-        ~SymbolTable();
-
-        bool         Add(class Text *name, class Value *value);
-        bool         Dump(void) const;
-        class Value *Lookup(Text *name);
-
-    private:
-        struct SymbolTableEntry {
-            SymbolTableEntry *next;
-            class Text  *name;
-            unsigned int hash;
-            class Value *value;
-        } *table[1024];
-    }; // class SymbolTable
-    
-} // namespace GlowingArcher
-
-#endif /* defined(__Glowing_Archer__SymbolTable__) */
