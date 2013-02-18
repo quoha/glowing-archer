@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D32044816D1C0CB008B3F5F /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D32044616D1C0CB008B3F5F /* Stack.cpp */; };
+		2D32044B16D1E04C008B3F5F /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D32044916D1E04C008B3F5F /* Variable.cpp */; };
 		2DADB31816B3A1B40044AA43 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB31716B3A1B40044AA43 /* main.cpp */; };
 		2DADB31A16B3A1B40044AA43 /* Glowing_Archer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */; };
 		2DADB32216B3A3A60044AA43 /* SearchPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32016B3A3A60044AA43 /* SearchPath.cpp */; };
@@ -36,6 +37,8 @@
 /* Begin PBXFileReference section */
 		2D32044616D1C0CB008B3F5F /* Stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stack.cpp; sourceTree = "<group>"; };
 		2D32044716D1C0CB008B3F5F /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
+		2D32044916D1E04C008B3F5F /* Variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Variable.cpp; sourceTree = "<group>"; };
+		2D32044A16D1E04C008B3F5F /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Variable.h; sourceTree = "<group>"; };
 		2DADB31316B3A1B40044AA43 /* Glowing Archer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Glowing Archer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DADB31716B3A1B40044AA43 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Glowing_Archer.1; sourceTree = "<group>"; };
@@ -106,6 +109,8 @@
 				2DADB32A16B465AF0044AA43 /* SymbolTable.h */,
 				2DADB32316B3A5130044AA43 /* Text.cpp */,
 				2DADB32416B3A5130044AA43 /* Text.h */,
+				2D32044916D1E04C008B3F5F /* Variable.cpp */,
+				2D32044A16D1E04C008B3F5F /* Variable.h */,
 				2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */,
 			);
 			path = "Glowing Archer";
@@ -172,6 +177,7 @@
 				2DADB33416B4DD280044AA43 /* ModelFile.cpp in Sources */,
 				2DADB33716B4E9130044AA43 /* ConfigFile.cpp in Sources */,
 				2D32044816D1C0CB008B3F5F /* Stack.cpp in Sources */,
+				2D32044B16D1E04C008B3F5F /* Variable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
