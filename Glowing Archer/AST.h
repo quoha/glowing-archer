@@ -30,24 +30,25 @@
 #ifndef __Glowing_Archer__AST__
 #define __Glowing_Archer__AST__
 
-#include "Object.h"
+#include "Stack.h"
+#include "SymbolTable.h"
+#include "Text.h"
 
 namespace GlowingArcher {
     
     // generic AST is simply a no-op
     //
-    class AST : public Object {
+    class AST {
     public:
         AST(void);
-        ~AST();
+        virtual ~AST();
 
+        virtual bool Dump(void) const;
+        virtual AST *Execute(SymbolTable *symtab, Stack *stack);
+
+    protected:
         AST *Next(void) const { return next; }
         void Next(AST *next_) { next = next_; }
-
-        // Object inheritance
-        //
-        virtual bool Dump(void) const;
-        virtual AST *Execute(void);
 
     private:
         AST *next;
@@ -58,10 +59,9 @@ namespace GlowingArcher {
         AST_If(AST *branchIfTrue, AST *branchIfFalse);
         ~AST_If(void);
 
-        // Object inheritance
-        //
         bool Dump(void) const;
-        AST *Execute(void);
+        AST *Execute(SymbolTable *symtab, Stack *stack);
+
     private:
         AST *ifTrue;
         AST *ifFalse;
@@ -69,29 +69,26 @@ namespace GlowingArcher {
 
     class AST_Text : public AST {
     public:
-        AST_Text(const char *text, int length, bool isTainted);
+        AST_Text(Text *text);
         ~AST_Text(void);
         
-        // Object inheritance
-        //
         bool Dump(void) const;
-        AST *Execute(void);
+        AST *Execute(SymbolTable *symtab, Stack *stack);
+
     private:
-        bool        isTainted;
-        const char *text;
-        int         length;
+        Text *text;
     }; // class AST_Text
 
     class AST_Word : public AST {
     public:
-        AST_Word(void);
+        AST_Word(Text *name);
         ~AST_Word(void);
         
-        // Object inheritance
-        //
         bool Dump(void) const;
-        AST *Execute(void);
+        AST *Execute(SymbolTable *symtab, Stack *stack);
+
     private:
+        Text *name;
     }; // class AST_Word
     
 } // namespace GlowingArcher

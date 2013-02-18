@@ -30,28 +30,30 @@
 #ifndef __Glowing_Archer__Stack__
 #define __Glowing_Archer__Stack__
 
-#include "Object.h"
+#include "Text.h"
 
 namespace GlowingArcher {
 
     struct StackItem {
         StackItem *prev;
         StackItem *next;
-        enum {siNumber} kind;
+        enum {siNumber, isText} kind;
         union {
-            int number;
+            int   number;
+            Text *text;
         } u;
     }; // struct StackItem
     
-    class Stack : public Object {
+    class Stack {
     public:
         Stack(void);
         ~Stack();
 
         int        Height(void) const { return height; }
         StackItem *Pop(void);
-        StackItem *Push(int number);
+        StackItem *Push(int        number);
         StackItem *Push(StackItem *s);
+        StackItem *Push(Text      *text);
 
     private:
         int        height;

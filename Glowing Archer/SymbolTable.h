@@ -28,29 +28,31 @@
 #ifndef __Glowing_Archer__SymbolTable__
 #define __Glowing_Archer__SymbolTable__
 
-#include "Object.h"
 #include "Text.h"
 
 namespace GlowingArcher {
+
+    struct SymbolTableEntry {
+        SymbolTableEntry *next;
+        Text             *name;
+        unsigned int      hash;
+        enum {seText} kind;
+        union {
+            Text *text;
+        } value;
+    }; // struct SymbolTableEntry
     
-    class SymbolTable : public Object {
+    class SymbolTable {
     public:
         SymbolTable(void);
         ~SymbolTable();
 
-        bool    Add(Text *name, Text *value);
-        Object *Lookup(Text *name);
-
-        // Object inheritance
-        bool Dump(void) const;
+        bool              Add(Text *name, Text *value);
+        bool              Dump(void) const;
+        SymbolTableEntry *Lookup(Text *name);
 
     private:
-        struct Entry {
-            unsigned int  hash;
-            Text         *name;
-            Object       *obj;
-            struct Entry *next;
-        } *table[1024];
+        SymbolTableEntry *table[1024];
     }; // class SymbolTable
     
 } // namespace GlowingArcher

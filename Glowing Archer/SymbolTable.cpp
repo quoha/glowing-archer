@@ -28,7 +28,7 @@
 #include "SymbolTable.h"
 #include <stdio.h>
 
-GlowingArcher::SymbolTable::SymbolTable(void) : GlowingArcher::Object("GlowingArcher::SymbolTable") {
+GlowingArcher::SymbolTable::SymbolTable(void) {
     for (int idx = 0; idx < 1024; idx++) {
         table[idx] = 0;
     }
@@ -36,9 +36,9 @@ GlowingArcher::SymbolTable::SymbolTable(void) : GlowingArcher::Object("GlowingAr
 
 GlowingArcher::SymbolTable::~SymbolTable() {
     for (int idx = 0; idx < 1024; idx++) {
-        struct Entry *e = table[idx];
+        SymbolTableEntry *e = table[idx];
         while (e) {
-            struct Entry *n = e->next;
+            SymbolTableEntry *n = e->next;
             delete e;
             e = n;
         }
@@ -46,24 +46,21 @@ GlowingArcher::SymbolTable::~SymbolTable() {
 }
 
 bool GlowingArcher::SymbolTable::Add(Text *name, Text *value) {
-    struct Entry *e = new struct Entry;
-    e->hash = value->Hash();
-    e->name = name;
-    e->obj  = value;
-    e->next = table[e->hash];
+    SymbolTableEntry *e = new SymbolTableEntry;
+    e->hash        = value->Hash();
+    e->name        = name;
+    e->value.text  = value;
+    e->next        = table[e->hash];
     table[e->hash] = e;
     return true;
 }
 
-GlowingArcher::Object *GlowingArcher::SymbolTable::Lookup(Text *name) {
-    struct Entry *e = table[name->Hash()];
-    while (e) {
-        if (name->Equal(e->name)) {
-            return e->obj;
-        }
+GlowingArcher::SymbolTableEntry *GlowingArcher::SymbolTable::Lookup(Text *name) {
+    SymbolTableEntry *e = table[name->Hash()];
+    while (e && !name->Equal(e->name)) {
         e = e->next;
     }
-    return 0;
+    return e;
 }
 
 bool GlowingArcher::SymbolTable::Dump(void) const {

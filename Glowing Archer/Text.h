@@ -30,12 +30,9 @@
 #ifndef __Glowing_Archer__Text__
 #define __Glowing_Archer__Text__
 
-#include "Object.h"
-
 namespace GlowingArcher {
     
-    class Text : public Object {
-
+    class Text {
     public:
         Text(Text *text);
         Text(Text *text1, Text *text2);
@@ -47,14 +44,14 @@ namespace GlowingArcher {
         bool         Equal(Text *text) const;
         unsigned int Hash(void) const { return hash; }
 
-        // Object overrides
-        virtual bool Dump(void) const;
-        virtual bool Render(void) const;
+        bool Dump(void) const;
+        bool Render(void) const;
 
     private:
-        int   length;
-        char *text;
+        int          length;
+        char        *text;
         unsigned int hash;
+        bool         isTainted;
     }; // class Text
     
 } // namespace GlowingArcher

@@ -31,9 +31,8 @@
 #include <stdio.h>
 #include <cstring>
 
-static const char *gaClassName = "GlowingArcher::Text";
-
-GlowingArcher::Text::Text(const char *text_, int length_) : Object(gaClassName) {
+GlowingArcher::Text::Text(const char *text_, int length_) {
+    isTainted = false;
     if (length_ < 0) {
         length_ = (int)std::strlen(text_ ? text_ : "");
     }
@@ -52,7 +51,8 @@ GlowingArcher::Text::Text(const char *text_, int length_) : Object(gaClassName) 
 	}
 }
 
-GlowingArcher::Text::Text(Text *text_) : Object(gaClassName) {
+GlowingArcher::Text::Text(Text *text_) {
+    isTainted = text_ ? text_->isTainted : false;
     if (!text_) {
         length = 0;
     } else {
@@ -70,8 +70,9 @@ GlowingArcher::Text::Text(Text *text_) : Object(gaClassName) {
 	}
 }
 
-GlowingArcher::Text::Text(Text *t1, Text *t2) : Object(gaClassName) {
-    length = 0;
+GlowingArcher::Text::Text(Text *t1, Text *t2) {
+    isTainted = ((t1 && t1->isTainted) || (t2 && t2->isTainted)) ? true : false;
+    length    = 0;
     if (t1) {
         length += t1->length;
     }
@@ -124,6 +125,6 @@ bool GlowingArcher::Text::Equal(Text *text_) const {
 }
 
 bool GlowingArcher::Text::Render(void) const {
-    printf(" text:\t%s\n", text);
+    printf("%ctext:\t%s\n", isTainted ? 't' : ' ', text);
     return true;
 }

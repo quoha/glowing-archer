@@ -30,15 +30,15 @@
 #include "AST.h"
 #include <stdio.h>
 
-GlowingArcher::AST::AST(void) : GlowingArcher::Object("GlowingArcher::AST") {
-    //
+GlowingArcher::AST::AST(void) {
+    next = 0;
 }
 
 GlowingArcher::AST::~AST() {
     //
 }
 
-GlowingArcher::AST *GlowingArcher::AST::Execute(void) {
+GlowingArcher::AST *GlowingArcher::AST::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
     return Next();
 }
 
@@ -47,10 +47,34 @@ bool GlowingArcher::AST::Dump(void) const {
     return true;
 }
 
-GlowingArcher::AST_Text::AST_Text(const char *text_, int length_, bool isTainted_) {
+GlowingArcher::AST_If::AST_If(GlowingArcher::AST *branchIfTrue, GlowingArcher::AST *branchIfFalse) {
+    ifTrue  = branchIfTrue;
+    ifFalse = branchIfFalse;
+}
+
+GlowingArcher::AST_If::~AST_If() {
+    //
+}
+
+GlowingArcher::AST *GlowingArcher::AST_If::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    bool test = true;
+    AST *result = 0;
+    if (test && ifTrue) {
+        result = ifTrue->Execute(symtab, stack);
+    }
+    if (!test && ifFalse) {
+        result = ifFalse->Execute(symtab, stack);
+    }
+    return result;
+}
+
+bool GlowingArcher::AST_If::Dump(void) const {
+    printf("  ast:\tif\n");
+    return true;
+}
+
+GlowingArcher::AST_Text::AST_Text(GlowingArcher::Text *text_) {
     text      = text_;
-    length    = length_;
-    isTainted = isTainted_;
 }
 
 GlowingArcher::AST_Text::~AST_Text() {
@@ -58,18 +82,20 @@ GlowingArcher::AST_Text::~AST_Text() {
 }
 
 bool GlowingArcher::AST_Text::Dump(void) const {
-    printf("  ast:\ttext%s\n", isTainted ? " is tainted" : "");
+    printf("  ast:\ttext\n");
     return true;
 }
 
-GlowingArcher::AST *GlowingArcher::AST_Text::Execute(void) {
+GlowingArcher::AST *GlowingArcher::AST_Text::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
     // push the text onto the stack
+    stack->Push(text);
+
     // return the next AST in the tree
     return Next();
 }
 
-GlowingArcher::AST_Word::AST_Word(void) {
-    //
+GlowingArcher::AST_Word::AST_Word(GlowingArcher::Text *name_) {
+    name = name_;
 }
 
 GlowingArcher::AST_Word::~AST_Word() {
@@ -81,8 +107,13 @@ bool GlowingArcher::AST_Word::Dump(void) const {
     return true;
 }
 
-GlowingArcher::AST *GlowingArcher::AST_Word::Execute(void) {
+GlowingArcher::AST *GlowingArcher::AST_Word::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
     // lookup word in the symbol table if needed
+    SymbolTableEntry *e = symtab->Lookup(name);
+    if (!e) {
+        printf("error:\tundefined word '%s'\n", name->CString());
+        return 0;
+    }
     // execute the word
     // if it failed, return an error
     // otherwise, return the next node to execute
