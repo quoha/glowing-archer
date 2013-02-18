@@ -45,6 +45,9 @@ namespace GlowingArcher {
 
         bool Dump(void) const;
         bool Execute(class SymbolTable *symtab, class Stack *stack);
+        bool IsTrue(void) const {
+            return true;
+        }
         bool Render(void) const;
 
     private:

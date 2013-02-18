@@ -33,7 +33,7 @@
 
 bool GlowingArcher::ASTRoot::Dump(void) const {
     printf("  ast:\troot node\n");
-    return true;
+    return root ? root->Dump() : true;
 }
 
 bool GlowingArcher::ASTRoot::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
@@ -48,7 +48,8 @@ bool GlowingArcher::ASTRoot::Execute(GlowingArcher::SymbolTable *symtab, Glowing
 }
 
 bool GlowingArcher::AST_If::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack, GlowingArcher::AST **next) {
-    bool test = true;
+    Value *value = stack->Pop();
+    bool test = value ? value->IsTrue() : false;
     *next = test ? ifTrue : ifFalse;
     return true;
 }

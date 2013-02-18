@@ -47,6 +47,9 @@ namespace GlowingArcher {
         virtual bool Execute(class SymbolTable *symtab, class Stack *stack) {
             return false;
         }
+        virtual bool IsTrue(void) const {
+            return false;
+        }
         virtual bool Render(void) const {
             return false;
         }

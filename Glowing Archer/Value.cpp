@@ -28,7 +28,6 @@
 //
 
 #include "Value.h"
-#include "Stack.h"
 
 #if 0
 

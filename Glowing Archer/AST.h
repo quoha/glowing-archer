@@ -37,6 +37,29 @@
 
 namespace GlowingArcher {
 
+    class ASTRoot : public GlowingArcher::Value {
+    public:
+        ASTRoot(void) : Value() {
+            root = 0;
+        }
+        ~ASTRoot() {
+            //
+        }
+        
+        bool Dump(void) const;
+        bool Execute(SymbolTable *symtab, Stack *stack);
+        bool IsTrue(void) const {
+            return true;
+        }
+        bool Render(void) const {
+            return false;
+        }
+        
+    private:
+        class AST *root;
+    }; // class ASTRoot
+    
+
     // generic AST is simply a no-op
     //
     class AST {
@@ -123,25 +146,6 @@ namespace GlowingArcher {
     }; // class AST_Word
 
     
-    class ASTRoot : public GlowingArcher::Value {
-    public:
-        ASTRoot(void) : Value() {
-            root = 0;
-        }
-        ~ASTRoot() {
-            //
-        }
-
-        virtual bool Dump(void) const;
-        virtual bool Execute(SymbolTable *symtab, Stack *stack);
-        virtual bool Render(void) const {
-            return false;
-        }
-
-    private:
-        AST *root;
-    }; // class ASTRoot
-
 } // namespace GlowingArcher
 
 #endif /* defined(__Glowing_Archer__AST__) */
