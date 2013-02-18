@@ -34,6 +34,7 @@
 #include "AST.h"
 #include "ConfigFile.h"
 #include "ModelFile.h"
+#include "Value.h"
 #include <stdio.h>
 #include <cstring>
 
@@ -44,8 +45,35 @@ try {
     bool isVerbose = false;
     GlowingArcher::SearchPath  *searchPath = new GlowingArcher::SearchPath;
     GlowingArcher::SymbolTable *symtab     = new GlowingArcher::SymbolTable;
-    
+    GlowingArcher::Text        *envName    = new GlowingArcher::Text("environment", -1);
+    GlowingArcher::Text        *envValue   = 0;
+
+    // find the environment first
+    //
     for (int idx = 1; idx < argc; idx++) {
+        const char *opt = argv[idx];
+        if (std::strcmp(opt, "--") == 0) {
+            break;
+        } else if (std::strncmp(opt, "env=", 4) == 0) {
+            if (envValue) {
+                delete envValue;
+            }
+            envValue = new GlowingArcher::Text(opt + 4, -1);
+            argv[idx] = 0;
+        }
+    }
+    if (!envValue) {
+        printf("\nerror:\tyou must specify an environment on the command line\n\n");
+        return 2;
+    }
+    symtab->Add(envName, envValue);
+
+    // now parse the rest of the command line
+    //
+    for (int idx = 1; idx < argc; idx++) {
+        if (!argv[idx]) {
+            continue;
+        }
         char *opt = new char[std::strlen(argv[idx]) + 1];
         std::strcpy(opt, argv[idx]);
         char *val = opt;
@@ -69,11 +97,11 @@ try {
             }
             GlowingArcher::InputStream *is = new GlowingArcher::InputStream(cfgFile);
             is->Dump();
-            GlowingArcher::AST *ast = ParseConfigFile(is);
-            if (!ast) {
+            if (!GlowingArcher::ParseConfigFile(envValue, symtab, is)) {
                 printf("error:\terror parsing config file\n");
                 return 2;
             }
+            return 2;
         } else if (std::strcmp(opt, "model-file") == 0 && *val) {
                 GlowingArcher::Text *modelFile = searchPath->FindFile(new GlowingArcher::Text(val, -1));
                 if (!modelFile) {

@@ -52,13 +52,13 @@ bool GlowingArcher::SymbolTable::Add(Text *name, Value *value) {
     e->hash        = name->Hash();
     e->name        = name;
     e->value       = value;
-    e->next        = table[e->hash];
-    table[e->hash] = e;
+    e->next        = table[e->hash % 1024];
+    table[e->hash % 1024] = e;
     return true;
 }
 
 GlowingArcher::Value *GlowingArcher::SymbolTable::Lookup(Text *name) {
-    SymbolTableEntry *e = table[name->Hash()];
+    SymbolTableEntry *e = table[name->Hash() % 1024];
     while (e && !name->Equal(e->name)) {
         e = e->next;
     }

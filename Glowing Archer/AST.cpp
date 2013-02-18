@@ -31,6 +31,11 @@
 #include "Value.h"
 #include <stdio.h>
 
+bool GlowingArcher::ASTRoot::Add(GlowingArcher::AST *ast) {
+    root = ast;
+    return true;
+}
+
 bool GlowingArcher::ASTRoot::Dump(void) const {
     printf("  ast:\troot node\n");
     return root ? root->Dump() : true;

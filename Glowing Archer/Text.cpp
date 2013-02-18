@@ -34,6 +34,7 @@
 #include <cstring>
 
 GlowingArcher::Text::Text(const char *text_, int length_) : GlowingArcher::Value() {
+    isNull    = (text_ == 0) ? true : false;
     isTainted = false;
     if (length_ < 0) {
         length_ = (int)std::strlen(text_ ? text_ : "");
@@ -54,6 +55,7 @@ GlowingArcher::Text::Text(const char *text_, int length_) : GlowingArcher::Value
 }
 
 GlowingArcher::Text::Text(Text *text_) : GlowingArcher::Value() {
+    isNull    = text_ ? text_->isNull    : true;
     isTainted = text_ ? text_->isTainted : false;
     if (!text_) {
         length = 0;
@@ -73,7 +75,12 @@ GlowingArcher::Text::Text(Text *text_) : GlowingArcher::Value() {
 }
 
 GlowingArcher::Text::Text(Text *t1, Text *t2) : GlowingArcher::Value() {
-    isTainted = ((t1 && t1->isTainted) || (t2 && t2->isTainted)) ? true : false;
+    if ((t1 && !t1->isNull) || (t2 && !t2->isNull)) {
+        isNull = false;
+    } else {
+        isNull = true;
+    }
+    isTainted = (( t1 && t1->isTainted) || ( t2 && t2->isTainted)) ? true : false;
     length    = 0;
     if (t1) {
         length += t1->length;
@@ -99,6 +106,9 @@ GlowingArcher::Text::~Text() {
 
 bool GlowingArcher::Text::Append(Text *text_) {
     if (text_) {
+        if (isNull) {
+            isNull = text_->isNull;
+        }
         int   newLength = length + text_->length;
         char *newText   = new char[newLength + 1];
         

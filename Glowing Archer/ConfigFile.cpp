@@ -28,6 +28,7 @@
 //
 
 #include "ConfigFile.h"
+#include "SymbolTable.h"
 #include "Text.h"
 #include <stdio.h>
 #include <ctype.h>
@@ -36,7 +37,11 @@
 // parser state
 //
 struct PSTATE {
+    GlowingArcher::Text        *env;
+    GlowingArcher::Text        *envGlob;
     GlowingArcher::InputStream *is;
+    GlowingArcher::SymbolTable *symtab;
+    bool                        validSection;
     void                       *data; // ?
 };
 
@@ -61,15 +66,16 @@ static bool Expect(struct PSTATE *ps, const char *terminal);
 static bool TranslateSection(struct PSTATE *ps);
 static bool TranslateAssignment(struct PSTATE *ps);
 
-// by fiat, all AST's start and end with a no-op
-//
-GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *is) {
-    GlowingArcher::AST *root = new GlowingArcher::AST;
-    GlowingArcher::AST *tail = root;
-
-    struct PSTATE ps;
-    ps.is = is;
-
+bool GlowingArcher::ParseConfigFile(GlowingArcher::Text *env, GlowingArcher::SymbolTable *symtab, GlowingArcher::InputStream *is) {
+    struct PSTATE pState;
+    struct PSTATE *ps = &pState;
+    std::memset(ps, 0, sizeof(*ps));
+    ps->env          = env;
+    ps->envGlob      = new Text("*", 1);
+    ps->is           = is;
+    ps->symtab       = symtab;
+    ps->validSection = false;
+    
     // while ch in first(section)
     //   translate(section)
     // if ch = EOF
@@ -77,19 +83,16 @@ GlowingArcher::AST *GlowingArcher::ParseConfigFile(GlowingArcher::InputStream *i
     // else
     //   reject
     //
-    AcceptWhiteSpace(&ps);
-    while (ps.is->CurrChar() == '[') {
-        TranslateSection(&ps);
-        AcceptWhiteSpace(&ps);
+    AcceptWhiteSpace(ps);
+    while (ps->is->CurrChar() == '[') {
+        TranslateSection(ps);
+        AcceptWhiteSpace(ps);
     }
-    if (!AcceptTerminal(&ps, "EOF")) {
-        printf("parse:\terror - expected to find EOF on line %d\n", ps.is->Line());
+    if (!AcceptTerminal(ps, "EOF")) {
+        printf("parse:\terror - expected to find EOF on line %d\n", ps->is->Line());
         return 0;
     }
-
-    //tail->Append(new GlowingArcher::AST);
-
-    return root;
+    return false;
 }
 
 bool AcceptLiteral(struct PSTATE *ps, const char *literal) {
@@ -183,6 +186,8 @@ bool TranslateSection(struct PSTATE *ps) {
             GlowingArcher::Text *sectionName = new GlowingArcher::Text(startSectionName, (int)(ps->is->PCurr() - startSectionName));
             printf("parse:\tsection %s on line %d\n", sectionName->CString(), ps->is->Line());
             if (AcceptLiteral(ps, "]")) {
+                ps->validSection = (ps->envGlob->Equal(sectionName) || ps->env->Equal(sectionName));
+                printf("parse:\tsection %s %s valid\n", sectionName->CString(), ps->validSection ? "is" : "is not");
                 AcceptWhiteSpace(ps);
                 while (!ps->is->EndOfStream() && isalpha(ps->is->CurrChar())) {
                     if (!TranslateAssignment(ps)) {
@@ -191,7 +196,7 @@ bool TranslateSection(struct PSTATE *ps) {
                     }
                     AcceptWhiteSpace(ps);
                 }
-                
+                ps->validSection = false;
                 // should do something with the section
                 printf("parse:\tsuccessfully parsed section '%s'\n", sectionName->CString());
                 return true;
@@ -228,7 +233,8 @@ bool TranslateSection(struct PSTATE *ps) {
 bool TranslateAssignment(struct PSTATE *ps) {
     const char *startName = ps->is->PCurr();
     if (AcceptTerminal(ps, "name")) {
-        GlowingArcher::Text *assignmentName = new GlowingArcher::Text(startName, (int)(ps->is->PCurr() - startName));
+        GlowingArcher::Text *assignmentName  = new GlowingArcher::Text(startName, (int)(ps->is->PCurr() - startName));
+        GlowingArcher::Text *assignmentValue = 0;
         printf("parse:\tassign %s on line %d\n", assignmentName->CString(), ps->is->Line());
         bool isNull = true;
         if (AcceptLiteral(ps, "=")) {
@@ -245,13 +251,15 @@ bool TranslateAssignment(struct PSTATE *ps) {
                 printf("parse:\tassignment must be terminated on line %d\n", ps->is->Line());
                 return false;
             }
+            assignmentValue = isNull ? 0 : value;
         }
-        if (isNull) {
+        if (assignmentValue) {
+            printf("parse:\tsetting %s to %s\n", assignmentName->CString(), assignmentValue->CString());
+        } else {
             // set variable to null
             printf("parse:\tsetting %s to null\n", assignmentName->CString());
-        } else {
-            printf("parse:\tsetting %s to something\n", assignmentName->CString());
         }
+        ps->symtab->Add(assignmentName, assignmentValue);
         return true;
     }
     printf("parse:\tassignment expected name on line %d\n", ps->is->Line());

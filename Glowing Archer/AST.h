@@ -45,6 +45,8 @@ namespace GlowingArcher {
         ~ASTRoot() {
             //
         }
+
+        bool Add(class AST *ast);
         
         bool Dump(void) const;
         bool Execute(SymbolTable *symtab, Stack *stack);

@@ -45,7 +45,9 @@ namespace GlowingArcher {
         const char  *CString(void) const { return text; }
         bool         Equal(Text *text) const;
         unsigned int Hash(void) const { return hash; }
-        bool         IsNull(void) const { return false; }
+        bool         IsNull(void) const {
+            return isNull;
+        }
 
         bool Dump(void) const;
         bool Execute(class SymbolTable *symtab, class Stack *stack);
@@ -58,6 +60,7 @@ namespace GlowingArcher {
         int          length;
         char        *text;
         unsigned int hash;
+        bool         isNull;
         bool         isTainted;
     }; // class Text
     

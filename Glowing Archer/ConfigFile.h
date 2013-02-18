@@ -3,6 +3,7 @@
 //  Glowing Archer
 //
 //  Created by Michael Henderson on 1/26/13.
+//
 // This file is part of Glowing Archer (http://github.com/quoha/glowing-archer).
 //
 // Copyright (c) 2013 Michael D Henderson
@@ -30,11 +31,10 @@
 #define __Glowing_Archer__ConfigFile__
 
 #include "Stream.h"
-#include "AST.h"
 
 namespace GlowingArcher {
     
-    AST *ParseConfigFile(InputStream *is);
+    bool ParseConfigFile(class Text *env, class SymbolTable *symtab, InputStream *is);
 
 } // namespace GlowingArcher
 
