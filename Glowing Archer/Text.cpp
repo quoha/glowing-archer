@@ -28,10 +28,12 @@
 //
 
 #include "Text.h"
+#include "Stack.h"
+#include "SymbolTable.h"
 #include <stdio.h>
 #include <cstring>
 
-GlowingArcher::Text::Text(const char *text_, int length_) {
+GlowingArcher::Text::Text(const char *text_, int length_) : GlowingArcher::Value() {
     isTainted = false;
     if (length_ < 0) {
         length_ = (int)std::strlen(text_ ? text_ : "");
@@ -51,7 +53,7 @@ GlowingArcher::Text::Text(const char *text_, int length_) {
 	}
 }
 
-GlowingArcher::Text::Text(Text *text_) {
+GlowingArcher::Text::Text(Text *text_) : GlowingArcher::Value() {
     isTainted = text_ ? text_->isTainted : false;
     if (!text_) {
         length = 0;
@@ -70,7 +72,7 @@ GlowingArcher::Text::Text(Text *text_) {
 	}
 }
 
-GlowingArcher::Text::Text(Text *t1, Text *t2) {
+GlowingArcher::Text::Text(Text *t1, Text *t2) : GlowingArcher::Value() {
     isTainted = ((t1 && t1->isTainted) || (t2 && t2->isTainted)) ? true : false;
     length    = 0;
     if (t1) {
@@ -122,6 +124,11 @@ bool GlowingArcher::Text::Equal(Text *text_) const {
         return true;
     }
     return false;
+}
+
+bool GlowingArcher::Text::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    stack->Push(this);
+    return true;
 }
 
 bool GlowingArcher::Text::Render(void) const {

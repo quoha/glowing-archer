@@ -28,46 +28,58 @@
 //
 
 #include "Stack.h"
-#include "Value.h"
 
-GlowingArcher::Stack::Stack(void) {
+GlowingArcher::Stack::Stack(void) : GlowingArcher::Value() {
     height = 0;
     top = bottom = 0;
 }
 
-GlowingArcher::StackItem *GlowingArcher::Stack::Pop(void) {
+GlowingArcher::Stack::~Stack() {
+    //
+}
+
+bool GlowingArcher::Stack::Dump(void) const {
+    return false;
+}
+
+bool GlowingArcher::Stack::Execute(class SymbolTable *symtab, class Stack *stack) {
+    return false;
+}
+
+bool GlowingArcher::Stack::Render(void) const {
+    return false;
+}
+
+GlowingArcher::Value *GlowingArcher::Stack::Pop(void) {
     StackItem *s = top;
     if (top) {
+        height--;
         top = top->prev;
-        if (!top) {
+        if (top) {
+            top->next = 0;
+        } else {
             bottom = 0;
         }
     }
-    return s;
+    Value *value = s->value;
+    delete s;
+    return value;
 }
 
-GlowingArcher::StackItem *GlowingArcher::Stack::Push(StackItem *s) {
-    if (s) {
-        s->prev = top;
-        s->next = 0;
-
-        if (!top) {
-            bottom = s;
-        } else {
-            top->next = s;
-        }
-        top = s;
-
-        height++;
-    }
-
-    return s;
-}
-
-GlowingArcher::StackItem *GlowingArcher::Stack::Push(GlowingArcher::Value *value) {
+GlowingArcher::Value *GlowingArcher::Stack::Push(GlowingArcher::Value *value) {
     StackItem *s = new StackItem;
-    s->prev      = s->next = 0;
     s->value     = value;
+    s->next      = 0;
+    s->prev      = top;
 
-    return Push(s);
+    if (!top) {
+        bottom = top = s;
+    } else {
+        top->next = s;
+        top       = s;
+    }
+    
+    height++;
+
+    return value;
 }

@@ -1,8 +1,8 @@
 //
-//  Text.h
+//  Number.cpp
 //  Glowing Archer
 //
-//  Created by Michael Henderson on 1/25/13.
+//  Created by Michael Henderson on 2/18/13.
 //
 // This file is part of Glowing Archer (http://github.com/quoha/glowing-archer).
 //
@@ -27,36 +27,29 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef __Glowing_Archer__Text__
-#define __Glowing_Archer__Text__
+#include "Number.h"
+#include "SymbolTable.h"
+#include "Stack.h"
 
-#include "Value.h"
+GlowingArcher::Number::Number(int value_) {
+    value = value_;
+}
 
-namespace GlowingArcher {
-    
-    class Text : public Value {
-    public:
-        Text(Text *text);
-        Text(Text *text1, Text *text2);
-        Text(const char *text, int length);
-        ~Text();
+GlowingArcher::Number::~Number() {
+    //
+}
 
-        bool         Append(Text *text);
-        const char  *CString(void) const { return text; }
-        bool         Equal(Text *text) const;
-        unsigned int Hash(void) const { return hash; }
+bool GlowingArcher::Number::Dump(void) const {
+    return false;
+}
 
-        bool Dump(void) const;
-        bool Execute(class SymbolTable *symtab, class Stack *stack);
-        bool Render(void) const;
+bool GlowingArcher::Number::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    stack->Push(this);
+    return true;
+}
 
-    private:
-        int          length;
-        char        *text;
-        unsigned int hash;
-        bool         isTainted;
-    }; // class Text
-    
-} // namespace GlowingArcher
+bool GlowingArcher::Number::Render(void) const {
+    return false;
+}
 
-#endif /* defined(__Glowing_Archer__Text__) */
+

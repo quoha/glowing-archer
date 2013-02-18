@@ -31,42 +31,26 @@
 #include "Value.h"
 #include <stdio.h>
 
-GlowingArcher::AST::AST(void) {
-    next = 0;
-}
-
-GlowingArcher::AST::~AST() {
-    //
-}
-
-GlowingArcher::AST *GlowingArcher::AST::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
-    return Next();
-}
-
-bool GlowingArcher::AST::Dump(void) const {
-    printf("  ast:\tno-op\n");
+bool GlowingArcher::ASTRoot::Dump(void) const {
+    printf("  ast:\troot node\n");
     return true;
 }
 
-GlowingArcher::AST_If::AST_If(GlowingArcher::AST *branchIfTrue, GlowingArcher::AST *branchIfFalse) {
-    ifTrue  = branchIfTrue;
-    ifFalse = branchIfFalse;
-}
-
-GlowingArcher::AST_If::~AST_If() {
-    //
-}
-
-GlowingArcher::AST *GlowingArcher::AST_If::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
-    bool test = true;
-    AST *result = 0;
-    if (test && ifTrue) {
-        result = ifTrue->Execute(symtab, stack);
-    }
-    if (!test && ifFalse) {
-        result = ifFalse->Execute(symtab, stack);
+bool GlowingArcher::ASTRoot::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    bool result = true;
+    AST *ast = root;
+    while (result && ast) {
+        AST *next = 0;
+        result = ast->Execute(symtab, stack, &next);
+        ast = next;
     }
     return result;
+}
+
+bool GlowingArcher::AST_If::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack, GlowingArcher::AST **next) {
+    bool test = true;
+    *next = test ? ifTrue : ifFalse;
+    return true;
 }
 
 bool GlowingArcher::AST_If::Dump(void) const {
@@ -74,50 +58,30 @@ bool GlowingArcher::AST_If::Dump(void) const {
     return true;
 }
 
-GlowingArcher::AST_Text::AST_Text(GlowingArcher::Text *text_) {
-    text      = text_;
-}
-
-GlowingArcher::AST_Text::~AST_Text() {
-    //
-}
 
 bool GlowingArcher::AST_Text::Dump(void) const {
     printf("  ast:\ttext\n");
     return true;
 }
 
-GlowingArcher::AST *GlowingArcher::AST_Text::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
-    // push the text onto the stack
-    stack->Push(new Val_Text(text));
-
-    // return the next AST in the tree
-    return Next();
-}
-
-GlowingArcher::AST_Word::AST_Word(GlowingArcher::Text *name_) {
-    name = name_;
-}
-
-GlowingArcher::AST_Word::~AST_Word() {
-    //
-}
 
 bool GlowingArcher::AST_Word::Dump(void) const {
     printf("  ast:\tword\n");
     return true;
 }
 
-GlowingArcher::AST *GlowingArcher::AST_Word::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+bool GlowingArcher::AST_Word::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack, GlowingArcher::AST **next_) {
     // lookup word in the symbol table if needed
     Value *v = symtab->Lookup(name);
     if (!v) {
         printf("error:\tundefined word '%s'\n", name->CString());
-        return 0;
+        *next_ = 0;
+        return false;
     }
     // execute the word
-    // if it failed, return an error
-    // otherwise, return the next node to execute
-    return Next();
+    bool result = v->Execute(symtab, stack);
+    *next_ = result ? next : 0;
+
+    return result;
 }
 

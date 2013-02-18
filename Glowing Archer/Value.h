@@ -30,40 +30,31 @@
 #ifndef __Glowing_Archer__Value__
 #define __Glowing_Archer__Value__
 
-#include "AST.h"
-#include "Stack.h"
-#include "SymbolTable.h"
-#include "Text.h"
-#include "Value.h"
-
 namespace GlowingArcher {
     
     class Value {
     public:
-        Value(void);
-        virtual ~Value();
+        Value(void) {
+            //
+        }
+        virtual ~Value() {
+            //
+        }
         
-        virtual bool Dump(void) const;
-        virtual bool Execute(class SymbolTable *symtab, class Stack *stack);
-        virtual bool Render(void) const;
+        virtual bool Dump(void) const {
+            return false;
+        }
+        virtual bool Execute(class SymbolTable *symtab, class Stack *stack) {
+            return false;
+        }
+        virtual bool Render(void) const {
+            return false;
+        }
         
     private:
     }; // class Value
-    
-    
-    class Val_AST : public Value {
-    public:
-        Val_AST(AST *ast);
-        virtual ~Val_AST();
-        
-        bool Dump(void) const;
-        bool Execute(SymbolTable *symtab, Stack *stack);
-        bool Render(void) const;
-        
-    private:
-        AST *value;
-    }; // class Val_AST
-    
+
+#if 0
     
     class Val_CFunc : public Value {
     public:
@@ -78,46 +69,10 @@ namespace GlowingArcher {
     }; // class Val_CFunc
     
     
-    class Val_Number : public Value {
-    public:
-        Val_Number(int number);
-        virtual ~Val_Number();
-        
-        bool Dump(void) const;
-        bool Execute(SymbolTable *symtab, Stack *stack);
-        bool Render(void) const;
-        
-    private:
-        int value;
-    }; // class Val_Number
     
-    
-    class Val_Stack : public Value {
-    public:
-        Val_Stack(Stack *value);
-        ~Val_Stack();
-        
-        bool Dump(void) const;
-        bool Execute(SymbolTable *symtab, Stack *stack);
-        bool Render(void) const;
-        
-    private:
-        Stack *value;
-    }; // class Val_Stack
-    
-    
-    class Val_Text : public Value {
-    public:
-        Val_Text(Text *value);
-        ~Val_Text();
-        
-        bool Dump(void) const;
-        bool Execute(SymbolTable *symtab, Stack *stack);
-        bool Render(void) const;
-        
-    private:
-        Text *value;
-    }; // class Val_Text
+#endif
+
+
     
 } // namespace GlowingArcher
 

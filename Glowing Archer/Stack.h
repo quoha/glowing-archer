@@ -30,26 +30,29 @@
 #ifndef __Glowing_Archer__Stack__
 #define __Glowing_Archer__Stack__
 
+#include "Value.h"
+
 namespace GlowingArcher {
 
-    struct StackItem {
-        StackItem   *prev;
-        StackItem   *next;
-        class Value *value;
-    }; // struct StackItem
-    
-    class Stack {
+    class Stack : public Value {
     public:
         Stack(void);
         ~Stack();
 
-        int        Height(void) const { return height; }
-        StackItem *Pop(void);
-        StackItem *Push(StackItem   *s);
-        StackItem *Push(class Value *value);
+        int    Height(void) const { return height; }
+        Value *Pop(void);
+        Value *Push(class Value *value);
 
-        bool Dump(void) const { return false; }
-        bool Render(void) const { return false; }
+        bool Dump(void) const;
+        bool Execute(class SymbolTable *symtab, class Stack *stack);
+        bool Render(void) const;
+
+    private:
+        struct StackItem {
+            StackItem *prev;
+            StackItem *next;
+            Value     *value;
+        }; // struct StackItem
         
     private:
         int        height;

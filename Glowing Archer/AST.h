@@ -33,67 +33,115 @@
 #include "Stack.h"
 #include "SymbolTable.h"
 #include "Text.h"
+#include "Value.h"
 
 namespace GlowingArcher {
-    
+
     // generic AST is simply a no-op
     //
     class AST {
     public:
-        AST(void);
-        virtual ~AST();
+        AST(void) {
+            //
+        }
+        virtual ~AST() {
+            //
+        }
 
-        virtual bool Dump(void) const;
-        virtual AST *Execute(SymbolTable *symtab, Stack *stack);
+        virtual bool Dump(void) const {
+            return false;
+        }
+        virtual bool Execute(SymbolTable *symtab, Stack *stack, AST **next) {
+            *next = 0;
+            return false;
+        }
         virtual bool Render(void) const {
             return false;
         }
-
-    protected:
-        AST *Next(void) const { return next; }
-        void Next(AST *next_) { next = next_; }
-
-    private:
-        AST *next;
     }; // class AST
 
     class AST_If : public AST {
     public:
-        AST_If(AST *branchIfTrue, AST *branchIfFalse);
-        ~AST_If(void);
+        AST_If(AST *branchIfTrue, AST *branchIfFalse) {
+            ifTrue  = branchIfTrue;
+            ifFalse = branchIfFalse;
+        }
+        ~AST_If(void) {
+            //
+        }
 
         bool Dump(void) const;
-        AST *Execute(SymbolTable *symtab, Stack *stack);
+        bool Execute(SymbolTable *symtab, Stack *stack, AST **next);
 
     private:
         AST *ifTrue;
         AST *ifFalse;
+        bool test;
     }; // class AST_If
 
     class AST_Text : public AST {
     public:
-        AST_Text(Text *text);
-        ~AST_Text(void);
-        
+        AST_Text(Text *text_) {
+            text = text_;
+        }
+        ~AST_Text(void) {
+            //
+        }
+
         bool Dump(void) const;
-        AST *Execute(SymbolTable *symtab, Stack *stack);
+        bool Execute(SymbolTable *symtab, Stack *stack, AST **next_) {
+            bool result = text->Execute(symtab, stack);
+            *next_ = result ? next : 0;
+            return result;
+        }
 
     private:
+        AST  *next;
         Text *text;
     }; // class AST_Text
 
     class AST_Word : public AST {
     public:
-        AST_Word(Text *name);
-        ~AST_Word(void);
+        AST_Word(Text *name_) {
+            name = name_;
+            func = 0;
+        }
+        ~AST_Word(void) {
+            //
+        }
         
         bool Dump(void) const;
-        AST *Execute(SymbolTable *symtab, Stack *stack);
+        bool Execute(SymbolTable *symtab, Stack *stack, AST **next);
+        AST *Next(void) const {
+            return next;
+        }
 
     private:
-        Text *name;
+        AST   *next;
+        Text  *name;
+        Value *func;
     }; // class AST_Word
+
     
+    class ASTRoot : public GlowingArcher::Value {
+    public:
+        ASTRoot(void) : Value() {
+            root = 0;
+        }
+        ~ASTRoot() {
+            //
+        }
+
+        virtual bool Dump(void) const;
+        virtual bool Execute(SymbolTable *symtab, Stack *stack);
+        virtual bool Render(void) const {
+            return false;
+        }
+
+    private:
+        AST *root;
+    }; // class ASTRoot
+
 } // namespace GlowingArcher
 
 #endif /* defined(__Glowing_Archer__AST__) */

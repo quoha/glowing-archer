@@ -1,8 +1,8 @@
 //
-//  Text.h
+//  Number.h
 //  Glowing Archer
 //
-//  Created by Michael Henderson on 1/25/13.
+//  Created by Michael Henderson on 2/18/13.
 //
 // This file is part of Glowing Archer (http://github.com/quoha/glowing-archer).
 //
@@ -27,36 +27,26 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef __Glowing_Archer__Text__
-#define __Glowing_Archer__Text__
+#ifndef __Glowing_Archer__Number__
+#define __Glowing_Archer__Number__
 
 #include "Value.h"
 
 namespace GlowingArcher {
-    
-    class Text : public Value {
+
+    class Number : public Value {
     public:
-        Text(Text *text);
-        Text(Text *text1, Text *text2);
-        Text(const char *text, int length);
-        ~Text();
-
-        bool         Append(Text *text);
-        const char  *CString(void) const { return text; }
-        bool         Equal(Text *text) const;
-        unsigned int Hash(void) const { return hash; }
-
+        Number(int number);
+        ~Number();
+        
         bool Dump(void) const;
-        bool Execute(class SymbolTable *symtab, class Stack *stack);
+        bool Execute(SymbolTable *symtab, Stack *stack);
         bool Render(void) const;
-
+        
     private:
-        int          length;
-        char        *text;
-        unsigned int hash;
-        bool         isTainted;
-    }; // class Text
-    
+        int value;
+    }; // class Number
+
 } // namespace GlowingArcher
 
-#endif /* defined(__Glowing_Archer__Text__) */
+#endif /* defined(__Glowing_Archer__Number__) */
