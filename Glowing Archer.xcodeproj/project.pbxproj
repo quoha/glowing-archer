@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D32044816D1C0CB008B3F5F /* Stack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2D32044616D1C0CB008B3F5F /* Stack.cpp */; };
 		2DADB31816B3A1B40044AA43 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB31716B3A1B40044AA43 /* main.cpp */; };
 		2DADB31A16B3A1B40044AA43 /* Glowing_Archer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */; };
 		2DADB32216B3A3A60044AA43 /* SearchPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB32016B3A3A60044AA43 /* SearchPath.cpp */; };
@@ -33,6 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2D32044616D1C0CB008B3F5F /* Stack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Stack.cpp; sourceTree = "<group>"; };
+		2D32044716D1C0CB008B3F5F /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		2DADB31316B3A1B40044AA43 /* Glowing Archer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Glowing Archer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DADB31716B3A1B40044AA43 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2DADB31916B3A1B40044AA43 /* Glowing_Archer.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Glowing_Archer.1; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 				2DADB32716B430D80044AA43 /* Object.h */,
 				2DADB32016B3A3A60044AA43 /* SearchPath.cpp */,
 				2DADB32116B3A3A60044AA43 /* SearchPath.h */,
+				2D32044616D1C0CB008B3F5F /* Stack.cpp */,
+				2D32044716D1C0CB008B3F5F /* Stack.h */,
 				2DADB32C16B46D200044AA43 /* Stream.cpp */,
 				2DADB32D16B46D200044AA43 /* Stream.h */,
 				2DADB32916B465AE0044AA43 /* SymbolTable.cpp */,
@@ -166,6 +171,7 @@
 				2DADB33116B4DB7B0044AA43 /* AST.cpp in Sources */,
 				2DADB33416B4DD280044AA43 /* ModelFile.cpp in Sources */,
 				2DADB33716B4E9130044AA43 /* ConfigFile.cpp in Sources */,
+				2D32044816D1C0CB008B3F5F /* Stack.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
