@@ -28,6 +28,7 @@
 //
 
 #include "AST.h"
+#include "Value.h"
 #include <stdio.h>
 
 GlowingArcher::AST::AST(void) {
@@ -88,7 +89,7 @@ bool GlowingArcher::AST_Text::Dump(void) const {
 
 GlowingArcher::AST *GlowingArcher::AST_Text::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
     // push the text onto the stack
-    stack->Push(text);
+    stack->Push(new Val_Text(text));
 
     // return the next AST in the tree
     return Next();

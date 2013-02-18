@@ -45,6 +45,9 @@ namespace GlowingArcher {
 
         virtual bool Dump(void) const;
         virtual AST *Execute(SymbolTable *symtab, Stack *stack);
+        virtual bool Render(void) const {
+            return false;
+        }
 
     protected:
         AST *Next(void) const { return next; }

@@ -42,9 +42,9 @@ namespace GlowingArcher {
     private:
         struct SymbolTableEntry {
             SymbolTableEntry *next;
-            class Text  *name;
-            unsigned int hash;
-            class Value *value;
+            unsigned int      hash;
+            class Text       *name;
+            class Value      *value;
         } *table[1024];
     }; // class SymbolTable
     

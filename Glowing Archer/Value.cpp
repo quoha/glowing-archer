@@ -29,3 +29,127 @@
 
 #include "Value.h"
 
+GlowingArcher::Value::Value(void) {
+    //
+}
+
+GlowingArcher::Value::~Value() {
+    //
+}
+
+bool GlowingArcher::Value::Dump(void) const {
+    return false;
+}
+
+bool GlowingArcher::Value::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    return false;
+}
+
+bool GlowingArcher::Value::Render(void) const {
+    return false;
+}
+
+
+GlowingArcher::Val_AST::Val_AST(AST *value_) {
+    value = value_;
+}
+
+GlowingArcher::Val_AST::~Val_AST() {
+    //
+}
+
+bool GlowingArcher::Val_AST::Dump(void) const {
+    return value->Dump();
+}
+
+bool GlowingArcher::Val_AST::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    return value->Execute(symtab, stack);
+}
+
+bool GlowingArcher::Val_AST::Render(void) const {
+    return value->Render();
+}
+
+
+GlowingArcher::Val_CFunc::Val_CFunc(void) {
+    //
+}
+
+GlowingArcher::Val_CFunc::~Val_CFunc() {
+    //
+}
+
+bool GlowingArcher::Val_CFunc::Dump(void) const {
+    return false;
+}
+
+bool GlowingArcher::Val_CFunc::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    return false;
+}
+
+bool GlowingArcher::Val_CFunc::Render(void) const {
+    return false;
+}
+
+
+GlowingArcher::Val_Number::Val_Number(int value_) {
+    value = value_;
+}
+
+GlowingArcher::Val_Number::~Val_Number() {
+    //
+}
+
+bool GlowingArcher::Val_Number::Dump(void) const {
+    return false;
+}
+
+bool GlowingArcher::Val_Number::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    return false;
+}
+
+bool GlowingArcher::Val_Number::Render(void) const {
+    return false;
+}
+
+
+GlowingArcher::Val_Stack::Val_Stack(GlowingArcher::Stack *value_) {
+    value = value_;
+}
+
+GlowingArcher::Val_Stack::~Val_Stack() {
+    //
+}
+
+bool GlowingArcher::Val_Stack::Dump(void) const {
+    return value->Dump();
+}
+
+bool GlowingArcher::Val_Stack::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    return false;
+}
+
+bool GlowingArcher::Val_Stack::Render(void) const {
+    return value->Render();
+}
+
+
+GlowingArcher::Val_Text::Val_Text(GlowingArcher::Text *value_) {
+    value = value_;
+}
+
+GlowingArcher::Val_Text::~Val_Text() {
+    //
+}
+
+bool GlowingArcher::Val_Text::Dump(void) const {
+    return value->Dump();
+}
+
+bool GlowingArcher::Val_Text::Execute(GlowingArcher::SymbolTable *symtab, GlowingArcher::Stack *stack) {
+    return false;
+}
+
+bool GlowingArcher::Val_Text::Render(void) const {
+    return value->Render();
+}

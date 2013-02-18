@@ -28,6 +28,7 @@
 //
 
 #include "Stack.h"
+#include "Value.h"
 
 GlowingArcher::Stack::Stack(void) {
     height = 0;
@@ -43,15 +44,6 @@ GlowingArcher::StackItem *GlowingArcher::Stack::Pop(void) {
         }
     }
     return s;
-}
-
-GlowingArcher::StackItem *GlowingArcher::Stack::Push(int number) {
-    StackItem *s = new StackItem;
-    s->prev      = s->next = 0;
-    s->kind      = StackItem::siNumber;
-    s->u.number  = number;
-
-    return Push(s);
 }
 
 GlowingArcher::StackItem *GlowingArcher::Stack::Push(StackItem *s) {
@@ -72,11 +64,10 @@ GlowingArcher::StackItem *GlowingArcher::Stack::Push(StackItem *s) {
     return s;
 }
 
-GlowingArcher::StackItem *GlowingArcher::Stack::Push(GlowingArcher::Text *text) {
+GlowingArcher::StackItem *GlowingArcher::Stack::Push(GlowingArcher::Value *value) {
     StackItem *s = new StackItem;
     s->prev      = s->next = 0;
-    s->kind      = StackItem::isText;
-    s->u.text    = text;
-    
+    s->value     = value;
+
     return Push(s);
 }

@@ -61,7 +61,7 @@ namespace GlowingArcher {
         bool Render(void) const;
         
     private:
-        AST *ast;
+        AST *value;
     }; // class Val_AST
     
     
@@ -88,7 +88,7 @@ namespace GlowingArcher {
         bool Render(void) const;
         
     private:
-        int number;
+        int value;
     }; // class Val_Number
     
     
