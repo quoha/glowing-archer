@@ -33,6 +33,19 @@
 #include <stdio.h>
 #include <cstring>
 
+GlowingArcher::Text::Text(void) : GlowingArcher::Value() {
+    isNull    = true;
+    isTainted = false;
+    length    = 0;
+    text      = new char[length + 1];
+    text[length] = 0;
+    
+    hash = 0;
+    for (int idx = 0; idx < length; idx++) {
+		hash = (hash *  33) + text[idx];
+	}
+}
+
 GlowingArcher::Text::Text(const char *text_, int length_) : GlowingArcher::Value() {
     isNull    = (text_ == 0) ? true : false;
     isTainted = false;
@@ -47,7 +60,7 @@ GlowingArcher::Text::Text(const char *text_, int length_) : GlowingArcher::Value
         std::memset(text, 0, length);
     }
     text[length] = 0;
-
+    
     hash = 0;
     for (int idx = 0; idx < length; idx++) {
 		hash = (hash *  33) + text[idx];
@@ -125,7 +138,7 @@ bool GlowingArcher::Text::Append(Text *text_) {
 }
 
 bool GlowingArcher::Text::Dump(void) const {
-    printf(" text:\t%s\n", text);
+    printf("%ctext:\t%s\n", isTainted ? '*' : ' ', isNull ? "((null))" : text);
     return true;
 }
 

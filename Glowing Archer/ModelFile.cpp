@@ -28,9 +28,3 @@
 //
 
 #include "ModelFile.h"
-
-GlowingArcher::AST *GlowingArcher::ParseModelFile(GlowingArcher::InputStream *is) {
-    GlowingArcher::AST *root = 0;
-    
-    return root;
-}

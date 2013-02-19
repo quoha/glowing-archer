@@ -35,8 +35,6 @@
 
 namespace GlowingArcher {
 
-    AST *ParseModelFile(InputStream *is);
-
 } // namespace GlowingArcher
 
 #endif /* defined(__Glowing_Archer__ModelFile__) */

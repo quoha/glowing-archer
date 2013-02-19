@@ -101,25 +101,25 @@ try {
                 printf("error:\terror parsing config file\n");
                 return 2;
             }
-            return 2;
+            symtab->Dump();
         } else if (std::strcmp(opt, "model-file") == 0 && *val) {
-                GlowingArcher::Text *modelFile = searchPath->FindFile(new GlowingArcher::Text(val, -1));
-                if (!modelFile) {
-                    printf("\nerror:\tunable to locate model file '%s'\n", val);
-                    return 2;
-                }
-                if (isVerbose) {
-                    printf(" info:\t%-20s == '%s'\n", "modelFile", modelFile->CString());
-                } else {
-                    printf(" info:\t%-20s == '%s'\n", "modelFile", val);
-                }
-                GlowingArcher::InputStream *is = new GlowingArcher::InputStream(modelFile);
-                is->Dump();
-                GlowingArcher::AST *ast = ParseModelFile(is);
-                if (!ast) {
-                    printf("error:\terror parsing model file\n");
-                    return 2;
-                }
+            GlowingArcher::Text *modelFile = searchPath->FindFile(new GlowingArcher::Text(val, -1));
+            if (!modelFile) {
+                printf("\nerror:\tunable to locate model file '%s'\n", val);
+                return 2;
+            }
+            if (isVerbose) {
+                printf(" info:\t%-20s == '%s'\n", "modelFile", modelFile->CString());
+            } else {
+                printf(" info:\t%-20s == '%s'\n", "modelFile", val);
+            }
+            GlowingArcher::InputStream *is = new GlowingArcher::InputStream(modelFile);
+            is->Dump();
+            if (!GlowingArcher::ParseConfigFile(envValue, symtab, is)) {
+                printf("error:\terror parsing config file\n");
+                return 2;
+            }
+            symtab->Dump();
         } else if (std::strcmp(opt, "verbose") == 0) {
             if (std::strcmp(val, "yes") == 0 || std::strcmp(val, "true") == 0) {
                 isVerbose = true;

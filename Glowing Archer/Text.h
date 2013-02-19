@@ -36,6 +36,7 @@ namespace GlowingArcher {
     
     class Text : public Value {
     public:
+        Text(void);
         Text(Text *text);
         Text(Text *text1, Text *text2);
         Text(const char *text, int length);

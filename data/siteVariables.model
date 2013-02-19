@@ -1,14 +1,3 @@
-; anything after a semi-colon is a comment
-
-; the splat space applies to all environment
 [*]
-	aFunc = ; defines the variable and sets it to null
 	copyrightYear = "2013";
 	licenseType = "MIT";
-[dev]
-	siteName = "Glowing Archer -- DEVELOPMENT";
-        aFunc = "<cms footer />"; override the prior definition
-[prod]
-	siteName = "Glowing Archer";
-[dev]
-	; you can list environments multiple times

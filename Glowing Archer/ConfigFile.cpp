@@ -76,6 +76,18 @@ bool GlowingArcher::ParseConfigFile(GlowingArcher::Text *env, GlowingArcher::Sym
     ps->symtab       = symtab;
     ps->validSection = false;
     
+    // default header section
+    ps->validSection = true;
+    AcceptWhiteSpace(ps);
+    while (!ps->is->EndOfStream() && isalpha(ps->is->CurrChar())) {
+        if (!TranslateAssignment(ps)) {
+            printf("parse:\tfailed to find optional assignment on line %d\n", ps->is->Line());
+            return false;
+        }
+        AcceptWhiteSpace(ps);
+    }
+    ps->validSection = false;
+
     // while ch in first(section)
     //   translate(section)
     // if ch = EOF
@@ -90,9 +102,9 @@ bool GlowingArcher::ParseConfigFile(GlowingArcher::Text *env, GlowingArcher::Sym
     }
     if (!AcceptTerminal(ps, "EOF")) {
         printf("parse:\terror - expected to find EOF on line %d\n", ps->is->Line());
-        return 0;
+        return false;
     }
-    return false;
+    return true;
 }
 
 bool AcceptLiteral(struct PSTATE *ps, const char *literal) {
@@ -187,6 +199,9 @@ bool TranslateSection(struct PSTATE *ps) {
             printf("parse:\tsection %s on line %d\n", sectionName->CString(), ps->is->Line());
             if (AcceptLiteral(ps, "]")) {
                 ps->validSection = (ps->envGlob->Equal(sectionName) || ps->env->Equal(sectionName));
+                if (isNot) {
+                    ps->validSection = !ps->validSection;
+                }
                 printf("parse:\tsection %s %s valid\n", sectionName->CString(), ps->validSection ? "is" : "is not");
                 AcceptWhiteSpace(ps);
                 while (!ps->is->EndOfStream() && isalpha(ps->is->CurrChar())) {
@@ -239,15 +254,41 @@ bool TranslateAssignment(struct PSTATE *ps) {
         bool isNull = true;
         if (AcceptLiteral(ps, "=")) {
             AcceptWhiteSpace(ps);
+            int line = ps->is->Line();
             const char *startValue = ps->is->PCurr();
-            if (!AcceptTerminal(ps, "value")) {
+            bool isToEOF = (std::strncmp(startValue, "<@<@>@>", 7) == 0);
+            if (isToEOF) {
+                ps->is->SkipLine();
+                startValue = ps->is->PCurr();
+                while (ps->is->SkipLine()) {
+                    //
+                }
+            } else if (!AcceptTerminal(ps, "value")) {
                 printf("parse:\tassignment must be null or a quoted string on line %d\n", ps->is->Line());
                 return false;
             }
-            GlowingArcher::Text *value = new GlowingArcher::Text(startValue, (int)(ps->is->PCurr() - startValue));
+            const char *endValue = ps->is->PCurr();
+            if (!endValue) {
+                printf("parse:\terror - unexpected end of value on line %d\n", line);
+                return false;
+            }
+            if (*startValue == '"' || *startValue == '\'') {
+                endValue--;
+                if (*endValue != *startValue) {
+                    printf("parse:\terror - unterminated value on line %d\n", line);
+                    printf("\topen  quote is %c\n\tclose quote is %c\n", *startValue, *endValue);
+                    return false;
+                }
+                startValue++;
+                if (startValue > endValue) {
+                    printf("parse:\terror - somehow value got rotated on line %d\n", line);
+                    return false;
+                }
+            }
+            GlowingArcher::Text *value = new GlowingArcher::Text(startValue, (int)(endValue - startValue));
             printf("parse:\t_value %s on line %d\n", value->CString(), ps->is->Line());
             isNull = std::strcmp(value->CString(), "null") == 0;
-            if (!AcceptLiteral(ps, ";")) {
+            if (!isToEOF && !AcceptLiteral(ps, ";")) {
                 printf("parse:\tassignment must be terminated on line %d\n", ps->is->Line());
                 return false;
             }
@@ -258,6 +299,7 @@ bool TranslateAssignment(struct PSTATE *ps) {
         } else {
             // set variable to null
             printf("parse:\tsetting %s to null\n", assignmentName->CString());
+            assignmentValue = new GlowingArcher::Text;
         }
         ps->symtab->Add(assignmentName, assignmentValue);
         return true;

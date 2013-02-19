@@ -67,6 +67,17 @@ GlowingArcher::Value *GlowingArcher::SymbolTable::Lookup(Text *name) {
 
 bool GlowingArcher::SymbolTable::Dump(void) const {
     printf("symtb:\t%s\n", "*** dump ***");
+    for (int idx = 0; idx < 1024; idx++) {
+        SymbolTableEntry *e = table[idx];
+        if (e) {
+            printf("..buk:\t%5d ------------\n", idx);
+            while (e) {
+                printf(".hash:\t%8x name %s\n", e->hash, e->name->CString());
+                e->value->Dump();
+                e = e->next;
+            }
+        }
+    }
     return true;
 }
 
